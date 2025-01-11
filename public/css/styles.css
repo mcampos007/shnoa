@@ -1,0 +1,497 @@
+/* Global Styles */
+body {
+  font-family: "Libre Franklin", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #e9f2f7; /* Fondo suave para todo el sitio */
+}
+
+/* Header Styles */
+header {
+  background-color: #04a0d7;
+  padding: 20px 0;
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #04a0d7; /* Fondo sólido del encabezado */
+  border-bottom: 5px solid #53b04c; /* Agrego una línea delgada para diferenciar */
+}
+
+header img {
+  width: 150px; /* Ajusta el tamaño del logo aquí */
+  background-color: white; /* Fondo blanco detrás del logo para destacarlo */
+  padding: 10px; /* Espaciado entre el logo y el fondo */
+  border-radius: 50%; /* Hacer que el fondo del logo sea redondeado */
+}
+header h1 {
+  margin: 10px 0;
+}
+
+/* Navbar Styles */
+nav {
+  background-color: #53b04c;
+  padding: 10px 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main Container Styles */
+.container {
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+/* Gallery Styles (Flexbox Layout) */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+
+.gallery img {
+  width: 32%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Welcome Section Styles */
+.welcome {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.welcome h2 {
+  margin-bottom: 20px;
+}
+
+.welcome p {
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+}
+
+.welcome-images {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.welcome-images img {
+  width: 45%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #04a0d7;
+  padding: 10px;
+  color: white;
+  text-align: center;
+}
+/* Sección Nosotros */
+.about-us {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.about-us h2 {
+  margin-bottom: 30px;
+}
+
+.about-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  align-items: center;
+}
+
+.about-section:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.about-text {
+  width: 45%;
+  padding: 10px;
+}
+
+.about-text h3 {
+  margin-bottom: 15px;
+  color: #04a0d7;
+}
+
+.about-text p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.about-image img {
+  width: 100%;
+  border-radius: 10px;
+  max-width: 400px;
+}
+/* Estilos para el Contacto */
+.contact-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+}
+
+.contact-info,
+.contact-form {
+  width: 48%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.contact-info {
+  background-color: #f4f4f4;
+  border-radius: 10px;
+}
+
+.contact-info h3 {
+  color: #04a0d7;
+  margin-bottom: 15px;
+}
+
+.contact-info p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+}
+
+.contact-info .map-container {
+  background-color: #e9f2f7;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.contact-info .map-placeholder {
+  background-color: #c0c0c0;
+  height: 200px;
+  text-align: center;
+  line-height: 200px;
+  color: white;
+  border-radius: 8px;
+}
+
+.contact-form h3 {
+  color: #04a0d7;
+  margin-bottom: 20px;
+}
+
+.contact-form label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+  color: #555;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.contact-form button {
+  background-color: #53b04c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.contact-form button:hover {
+  background-color: #04a0d7;
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+  }
+
+  .contact-info,
+  .contact-form {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+/* Estilos para la página de productos */
+.products-container {
+  display: flex;
+  margin-top: 40px;
+}
+
+.categories {
+  width: 25%; /* Sección de categorías ocupa el 25% de la pantalla */
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  position: fixed; /* Mantener la sección de categorías fija */
+  top: 400px; /* Dejar espacio para el navbar */
+  left: 20px; /* Espacio desde el lado izquierdo */
+  height: calc(
+    100vh - 600px
+  ); /* Ajuste para que ocupe toda la altura disponible menos el navbar */
+  overflow-y: auto; /* Permite scroll si es necesario */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.categories h3 {
+  color: #04a0d7;
+  margin-bottom: 15px;
+}
+
+.categories ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.categories li {
+  margin: 10px 0;
+}
+
+.categories a {
+  text-decoration: none;
+  color: #04a0d7;
+  font-weight: bold;
+}
+
+.products {
+  width: 75%;
+  padding: 20px;
+  margin-left: calc(
+    25% + 40px
+  ); /* Esto hace que la sección de productos esté desplazada hacia la derecha, ajustado a la categoría fija */
+}
+
+.product-category {
+  margin-bottom: 40px;
+}
+
+.product-category h2 {
+  color: #04a0d7;
+  margin-bottom: 15px;
+}
+
+.product-boxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.product-box {
+  background-color: #e9f2f7;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  border: 2px solid #04a0d7; /* Borde para delimitar las cajas de productos */
+}
+
+.product-box img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product-box h4 {
+  margin-top: 10px;
+  color: #04a0d7;
+}
+
+.product-box p {
+  margin-top: 5px;
+  color: #555;
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+  .products-container {
+    flex-direction: column;
+  }
+
+  .categories,
+  .products {
+    width: 100%;
+  }
+
+  .product-boxes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .categories {
+    position: static; /* Deja de ser fija en pantallas pequeñas */
+    margin-bottom: 20px;
+  }
+
+  .products {
+    margin-left: 0; /* Quitar el margen izquierdo */
+  }
+}
+
+/* //Estilos agregados para la página de .categories */
+
+/* Estilo para el encabezado de la página de categorías */
+h1 {
+  color: #04a0d7;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Estilo para el enlace que se comporta como un botón */
+.btn-create-category {
+  background-color: #53b04c;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: inline-block; /* Para que se comporte como un botón */
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-create-category:hover {
+  background-color: #45a743; /* Cambia el color cuando pasa el mouse */
+}
+
+/* Estilo para la tabla de categorías */
+.category-table table {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.category-table th,
+.category-table td {
+  padding: 1rem;
+  text-align: left;
+}
+
+/* Estilo para las imágenes dentro de la tabla */
+.category-table img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Estilo para el botón de "Editar" */
+.btn-edit {
+  background-color: #f8c106;
+  color: white;
+  border: 1px solid #f8c106; /* Agregar un borde para mayor definición */
+  padding: 6px 12px;
+  border-radius: 5px;
+  display: inline-block; /* Para alinearlo correctamente */
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-edit:hover {
+  background-color: #f1b400;
+  border-color: #f1b400;
+}
+
+/* Estilo para el botón de "Eliminar" */
+.btn-delete {
+  background-color: #e74c3c;
+  color: white;
+  border: 1px solid #e74c3c; /* Agregar un borde para mayor definición */
+  padding: 6px 12px;
+  border-radius: 5px;
+  display: inline-block; /* Para alinearlo correctamente */
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+  border-color: #c0392b;
+}
+
+/* Alineación de los botones de acción */
+.action-buttons {
+  display: flex;
+  gap: 10px; /* Espacio entre los botones */
+  justify-content: flex-start; /* Alinea los botones a la izquierda */
+}
+
+/* Estilo para el formulario */
+.category-form {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.category-form .form-group {
+  margin-bottom: 15px;
+}
+
+.category-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.category-form input,
+.category-form textarea,
+.category-form .form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.category-form button.btn-create-category {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.category-form button.btn-create-category:hover {
+  background-color: #0056b3;
+}
