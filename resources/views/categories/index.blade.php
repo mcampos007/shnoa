@@ -1,10 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        {{-- <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-2xl font-bold text-center font-weight-bold text-gray-500">
             Categorías
-        </h2> --}}
+        </h2>
     </x-slot>
-
 
     <div class="products-container">
         @if (session('success'))
@@ -20,9 +19,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+
         <div class="categories">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold">Categorías</h3>
+                {{-- <h3 class="text-lg font-semibold">Categorías</h3> --}}
                 <a href="{{ route('categories.create') }}"
                     class="bg-blue-600 text-black px-4 py-2 rounded shadow hover:bg-gray-500 transition">
                     + Agregar Categoría

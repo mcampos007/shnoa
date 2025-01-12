@@ -1,6 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 style="font-size: 1.5rem; color: #f39c12; font-weight: bold; text-align: center;">
+        {{-- <h2 style="font-size: 1.5rem; color: #f39c12; font-weight: bold; text-align: center;"> --}}
+        <h2 class="text-2xl font-bold text-center font-weight-bold text-gray-500">
             {{ __('Dashboard') }}
         </h2>
 
@@ -8,16 +9,14 @@
 
     <!-- Mensaje de éxito -->
     @if (session('success'))
-        <div
-            style="padding: 1rem; margin-bottom: 1rem; background-color: #2ecc71; color: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
+        <div class="p-4 mb-4 bg-emerald text-white rounded-lg shadow-lg">
             <strong>¡Éxito!</strong> {{ session('success') }}
         </div>
     @endif
 
     <!-- Mensajes de error -->
     @if ($errors->any())
-        <div
-            style="padding: 1rem; margin-bottom: 1rem; background-color: #e74c3c; color: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);">
+        <div class="p-4 mb-4 bg-red-500 text-white rounded-lg shadow-lg">
             <strong>¡Error!</strong>
             <ul>
                 @foreach ($errors->all() as $error)

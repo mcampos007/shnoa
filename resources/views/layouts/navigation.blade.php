@@ -44,6 +44,11 @@
                             {{ __('Categorias') }}
                         </x-dropdown-link>
 
+                        <!-- Links to Products -->
+                        <x-dropdown-link :href="route('products.index')">
+                            {{ __('Productos') }}
+                        </x-dropdown-link>
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>

@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        {{-- <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-2xl font-bold text-center font-weight-bold text-gray-500">
             Categorías
-        </h2> --}}
+        </h2>
     </x-slot>
 
     <div class="container">
-        <h1 class="mb-4">Editar Categoría</h1>
+        {{-- <h1 class="mb-4">Editar Categoría</h1> --}}
 
         <!-- Formulario para editar una categoría -->
         <div class="category-form">
@@ -40,7 +40,7 @@
                     @if ($category->image)
                         <div class="mb-3">
                             <img src="{{ asset('storage/' . $category->image) }}" alt="Imagen de la categoría"
-                                style="max-width: 200px; border-radius: 8px;">
+                                class="max-w-xs rounded-lg">
                         </div>
                     @endif
 

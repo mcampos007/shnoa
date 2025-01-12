@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        {{-- <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-2xl font-bold text-center font-weight-bold text-gray-500">
             Categorías
-        </h2> --}}
+        </h2>
     </x-slot>
 
     <div class="container">
-        <h1 class="mb-4">Crear Nueva Categoría</h1>
+
 
         <!-- Formulario para crear una categoría -->
         <div class="category-form">
