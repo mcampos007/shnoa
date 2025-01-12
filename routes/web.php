@@ -34,6 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('categories', CategoryController::class)->except(['show']);
     Route::resource('products', ProductController::class)->except(['show']);
+    // Ruta para restaurar un producto
+    Route::patch('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
 
 
 });

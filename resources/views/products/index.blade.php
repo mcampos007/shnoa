@@ -35,6 +35,7 @@
                                 <th class="border border-gray-300 px-4 py-2 text-left">Nombre</th>
                                 <th class="border border-gray-300 px-4 py-2 text-left">Descripción</th>
                                 <th class="border border-gray-300 px-4 py-2 text-left">Precio</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">Estado</th>
                                 <th class="border border-gray-300 px-4 py-2 text-left">Acciones</th>
                             </tr>
                         </thead>
@@ -47,22 +48,46 @@
                                     <td class="border border-gray-300 px-4 py-2">
                                         ${{ number_format($product->price, 2) }}</td>
                                     <td class="border border-gray-300 px-4 py-2">
+                                        {{ $product->trashed() ? 'Eliminado' : 'Activo' }}</td>
+                                    <td>
                                         <div class="flex space-x-2">
-                                            <a href="{{ route('products.edit', $product->id) }}"
-                                                class="bg-yellow-500 text-black px-4 py-2 rounded shadow hover:bg-gray-500 transition">
-                                                Editar
-                                            </a>
-                                            <form action="{{ route('products.destroy', $product->id) }}" method="POST"
-                                                style="display:inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="bg-red-500 text-black px-4 py-2 rounded shadow hover:bg-gray-500 transition"
-                                                    onclick="return confirm('¿Estás seguro de eliminar este producto?')">Eliminar</button>
-                                            </form>
+                                            <!-- Botón Editar -->
+                                            @if (!$product->trashed())
+                                                <a href="{{ route('products.edit', $product->id) }}"
+                                                    class="bg-yellow-500 text-black px-4 py-2 rounded shadow hover:bg-gray-500 transition">
+                                                    Editar
+                                                </a>
+                                            @endif
 
+                                            <!-- Botón Eliminar o Restaurar -->
+                                            @if ($product->trashed())
+                                                <!-- Botón Restaurar -->
+                                                <form action="{{ route('products.restore', $product->id) }}"
+                                                    method="POST" style="display:inline-block;">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit"
+                                                        class="bg-green-500 text-black px-4 py-2 rounded shadow hover:bg-gray-500 transition">
+                                                        Restaurar
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <!-- Botón Eliminar -->
+                                                <form action="{{ route('products.destroy', $product->id) }}"
+                                                    method="POST" style="display:inline-block;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="bg-red-500 text-black px-4 py-2 rounded shadow hover:bg-gray-500 transition"
+                                                        onclick="return confirm('¿Estás seguro de eliminar este producto?')">
+                                                        Eliminar
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </td>
+
+
                                 </tr>
                             @endforeach
                         </tbody>

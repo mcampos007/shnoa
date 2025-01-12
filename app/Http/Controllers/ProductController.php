@@ -12,7 +12,9 @@ use App\Models\ProductImage;
 class ProductController extends Controller {
     public function index() {
         // Obtener productos con paginación de 10 registros por página
-        $products = Product::paginate( 10 );
+
+        $products = Product::withTrashed()->paginate( 10 );
+        // Incluye eliminados
 
         // Retornar la vista con los productos paginados
         return view( 'products.index', compact( 'products' ) );
@@ -83,6 +85,11 @@ class ProductController extends Controller {
 
     public function edit( string $id ) {
         //
+        $product = Product::findOrFail( $id );
+        $categories = Category::orderBy( 'name' )->get();
+
+        return view( 'products.edit', compact( 'product', 'categories' ) );
+
     }
 
     /**
@@ -90,7 +97,31 @@ class ProductController extends Controller {
     */
 
     public function update( Request $request, string $id ) {
-        //
+        // Validar los datos recibidos
+        $validatedData = $request->validate( [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'stock' => 'required|integer|min:0',
+            'price' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
+        ] );
+
+        // Buscar el producto por su ID
+        $product = Product::findOrFail( $id );
+
+        // Actualizar los datos del producto
+        $product->update( [
+            'name' => $validatedData[ 'name' ],
+            'description' => $validatedData[ 'description' ],
+            'stock' => $validatedData[ 'stock' ],
+            'price' => $validatedData[ 'price' ],
+            'category_id' => $validatedData[ 'category_id' ],
+            'updated_by' => auth()->id(), // Registrar el usuario que realizó la actualización
+        ] );
+
+        // Redirigir con un mensaje de éxito
+        return redirect()->route( 'products.index' )
+        ->with( 'success', 'Producto actualizado exitosamente.' );
     }
 
     /**
@@ -98,6 +129,28 @@ class ProductController extends Controller {
     */
 
     public function destroy( string $id ) {
-        //
+        // Buscar el producto por su ID
+        $product = Product::findOrFail( $id );
+
+        // Registrar el usuario que elimina el producto
+        $product->deleted_by = auth()->id();
+        $product->save();
+
+        // Aplicar soft delete
+        $product->delete();
+
+        // Redirigir con un mensaje de éxito
+        return redirect()->route( 'products.index' )
+        ->with( 'success', 'Producto eliminado exitosamente.' );
     }
+
+    public function restore( string $id ) {
+        $product = Product::withTrashed()->findOrFail( $id );
+
+        $product->restore();
+
+        return redirect()->route( 'products.index' )
+        ->with( 'success', 'Producto restaurado exitosamente.' );
+    }
+
 }
