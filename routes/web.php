@@ -36,6 +36,18 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class)->except(['show']);
     // Ruta para restaurar un producto
     Route::patch('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');
+    //Manejo de las imágenes
+    Route::get('products/{id}/images', [ProductController::class, 'manageImages'])->name('products.images.manage');
+    Route::post('products/{id}/images', [ProductController::class, 'storeImage'])->name('products.images.store');
+    Route::delete('products/{product}/images/{image}', [ProductController::class, 'destroyImage'])->name('products.images.destroy');
+    Route::patch('products/{product}/images/{image}/feature', [ProductController::class, 'featureImage'])->name('products.images.feature');
+    // Route::post('products/{product}/images', [ProductController::class, 'storeImage'])->name('products.images.store');
+    Route::patch('products/{product}/images/{image}/unfeature', [ProductController::class, 'unfeatureImage'])->name('products.images.unfeature');
+    // Ruta para restaurar una imagen
+    Route::patch('products/{product}/images/{image}/restore', [ProductController::class, 'restoreImage'])->name('products.images.restore');
+    // Ruta para eliminar definitivamente una imagen
+    Route::delete('products/{product}/images/{image}/force', [ProductController::class, 'forceDeleteImage'])->name('products.images.force');
+
 
 
 });

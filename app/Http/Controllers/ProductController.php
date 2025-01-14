@@ -153,4 +153,63 @@ class ProductController extends Controller {
         ->with( 'success', 'Producto restaurado exitosamente.' );
     }
 
+    public function manageImages( $id ) {
+        $product = Product::findOrFail( $id );
+
+        $images = $product->images()->orderByDesc( 'is_featured' )->get();
+
+        // Destacada primero
+        return view( 'products.manage_images', compact( 'product', 'images' ) );
+    }
+
+    public function storeImage( Request $request, $id ) {
+        $product = Product::findOrFail( $id );
+
+        $request->validate( [
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ] );
+
+        $imagePath = $request->file( 'image' )->store( 'products', 'public' );
+
+        ProductImage::create( [
+            'product_id' => $product->id,
+            'image_path' => $imagePath,
+            'is_featured' => false,
+            'created_by' => auth()->id(),
+        ] );
+
+        return redirect()->route( 'products.images.manage', $product->id )
+        ->with( 'success', 'Imagen subida exitosamente.' );
+    }
+
+    public function destroyImage( $id, $image_id ) {
+        $product = Product::findOrFail( $id );
+
+        $image = ProductImage::findOrFail( $image_id );
+
+        if ( $image->product_id !== $product->id ) {
+            abort( 403, 'No autorizado.' );
+        }
+
+        $image->delete();
+
+        return redirect()->route( 'products.images.manage', $product->id )
+        ->with( 'success', 'Imagen eliminada exitosamente.' );
+    }
+
+    public function featureImage( $product_id,  $image_id ) {
+        $product = Product::findOrFail( $product_id );
+        $image = ProductImage::findOrFail( $image_id );
+
+        if ( $image->product_id !== $product->id ) {
+            abort( 403, 'No autorizado.' );
+        }
+
+        ProductImage::where( 'product_id', $product->id )->update( [ 'is_featured' => false ] );
+        $image->update( [ 'is_featured' => true ] );
+
+        return redirect()->route( 'products.images.manage', $product->id )
+        ->with( 'success', 'Imagen destacada actualizada exitosamente.' );
+    }
+
 }

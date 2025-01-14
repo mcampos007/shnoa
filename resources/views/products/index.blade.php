@@ -35,6 +35,7 @@
                                 <th class="border border-gray-300 px-4 py-2 text-left">Nombre</th>
                                 <th class="border border-gray-300 px-4 py-2 text-left">Descripción</th>
                                 <th class="border border-gray-300 px-4 py-2 text-left">Precio</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">Imágenes</th>
                                 <th class="border border-gray-300 px-4 py-2 text-left">Estado</th>
                                 <th class="border border-gray-300 px-4 py-2 text-left">Acciones</th>
                             </tr>
@@ -46,7 +47,14 @@
                                     <td class="border border-gray-300 px-4 py-2">{{ $product->name }}</td>
                                     <td class="border border-gray-300 px-4 py-2">{{ $product->description }}</td>
                                     <td class="border border-gray-300 px-4 py-2">
-                                        ${{ number_format($product->price, 2) }}</td>
+                                        ${{ number_format($product->price, 2) }}
+                                    </td>
+
+                                    <td>
+                                        <a href="{{ route('products.images.manage', $product->id) }}" class="">
+                                            Gestionar Imágenes
+                                        </a>
+                                    </td>
                                     <td class="border border-gray-300 px-4 py-2">
                                         {{ $product->trashed() ? 'Eliminado' : 'Activo' }}</td>
                                     <td>

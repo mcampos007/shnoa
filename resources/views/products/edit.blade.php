@@ -73,6 +73,13 @@
                     <button type="submit" class="btn-create-product">Actualizar Producto</button>
                 </div>
             </form>
+            <!-- Enlace para gestionar imágenes -->
+            <div class="text-center">
+                <a href="{{ route('products.images.manage', $product->id) }}"
+                    class="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition">
+                    Gestionar Imágenes
+                </a>
+            </div>
         </div>
     </div>
 </x-app-layout>

@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class ProductImage extends Model {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     protected $fillable = [
         'product_id',
         'image_path',
@@ -38,6 +40,15 @@ class ProductImage extends Model {
 
     public function getRouteKeyName() {
         return 'image_path';
+    }
+
+    public function delete() {
+        $this->deleted_by = Auth::id();
+        // Asigna el ID del usuario autenticado
+        $this->save();
+        // Guarda el cambio antes del soft delete
+        parent::delete();
+        // Llama al método original de delete()
     }
 
 }
