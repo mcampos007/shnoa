@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="text-2xl font-bold text-center font-weight-bold text-gray-500">
-            Categorías
+        <h2 class="text-2xl font-bold text-center font-weight-bold text-white-500">
+            CATEGORÍAS
         </h2>
     </x-slot>
 
@@ -20,13 +20,22 @@
             </div>
         @endif
 
-        <div class="categories">
+        <!-- <div class="categories">
             <div class="flex justify-between items-center mb-4">
                 {{-- <h3 class="text-lg font-semibold">Categorías</h3> --}}
                 <a href="{{ route('categories.create') }}"
-                    class="bg-blue-600 text-black px-4 py-2 rounded shadow hover:bg-gray-500 transition">
-                    + Agregar Categoría
-                </a>
+                  class="bg-green-200 text-black px-40 py-16 text-xl rounded shadow hover:bg-green-300 transition mt-[15px] inline-block"
+                    + Agregar Categoría>
+                </a> -->
+            <div class="categories">
+                <div class="flex justify-between items-center mb-4">
+                    {{-- <h3 class="text-lg font-semibold">Categorías</h3> --}}
+                    <a href="{{ route('categories.create') }}"
+                    class="bg-green-600 text-white px-8 py-3 text-lg rounded shadow hover:bg-green-700 transition mt-[15px] inline-block">
+                    Agregar Categoría
+                    </a>
+                </div>
+        </div>
             </div>
             @if ($categories->count() > 0)
                 <div class="overflow-x-auto">

@@ -16,7 +16,6 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{-- <link rel="stylesheet" href="{{ asset('css/welcome.css') }}"> --}}
 
     <!-- Sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -24,17 +23,17 @@
 
 </head>
 
-<body class="font-sans antialiased">
+<body class="bg-gray-300-400 font-sans antialiased">
     {{-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900"> --}}
-    <div class="container">
+    <div class="w-full mx-auto container">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
         @if (isset($header))
 
 
-            <header class="bg-gray-900 shadow width:100%">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-gray-100">
+            <header class="mx-auto bg-gray-900 shadow">
+                <div class="mx-auto py-6 px-4 sm:px-6 lg:px-8 text-gray-100">
                     {{ $header }}
                 </div>
             </header>
@@ -46,7 +45,7 @@
         </main>
     </div>
     <!-- Scripts específicos de la página -->
-    @yield('scripts')
+    @yield('scripts')    
 </body>
 
 </html>
