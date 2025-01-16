@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Product;
+use App\Models\ProductImage;
 
 use Illuminate\Http\Request;
 
@@ -22,6 +24,8 @@ class HomeController extends Controller {
     */
 
     public function index() {
-        return view( 'welcome' );
+
+        $featuredProducts = ProductImage::with( 'product' )->where( 'is_featured', true )->get();
+        return view( 'welcome', compact( 'featuredProducts' ) );
     }
 }

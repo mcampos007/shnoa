@@ -20,6 +20,9 @@ use App\Http\Controllers\ProductController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/slider', function () {
+    return view('slider');
+});
 
 // Página de inicio
 Route::get('/', [HomeController::class, 'index'])->name('index');
