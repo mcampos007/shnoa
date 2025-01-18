@@ -26,6 +26,27 @@ class HomeController extends Controller {
     public function index() {
 
         $featuredProducts = ProductImage::with( 'product' )->where( 'is_featured', true )->get();
+
         return view( 'welcome', compact( 'featuredProducts' ) );
     }
+
+    // método para contacto
+
+    public function contact() {
+        return view( 'contact' );
+    }
+
+    //Méetodo para nosotros
+
+    public function nosotros() {
+        return view( 'nosotros' );
+    }
+
+    //Método para productos
+
+    public function products() {
+        $products = Product::with( 'images' )->get();
+        return view( 'products', compact( 'products' ) );
+    }
+
 }

@@ -17,15 +17,18 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Route::get('/slider', function () {
     return view('slider');
 });
 
 // Página de inicio
 Route::get('/', [HomeController::class, 'index'])->name('index');
+Route::get('/nosotros', [HomeController::class, 'nosotros'])->name('nosotros');
+Route::get('/wc-products', [HomeController::class, 'products'])->name('wc-products');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

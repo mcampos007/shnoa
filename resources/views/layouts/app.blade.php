@@ -14,6 +14,7 @@
     <!-- Agregar Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -30,8 +31,6 @@
 
         <!-- Page Heading -->
         @if (isset($header))
-
-
             <header class="mx-auto bg-gray-900 shadow">
                 <div class="mx-auto py-6 px-4 sm:px-6 lg:px-8 text-gray-100">
                     {{ $header }}
@@ -45,7 +44,7 @@
         </main>
     </div>
     <!-- Scripts específicos de la página -->
-    @yield('scripts')    
+    @yield('scripts')
 </body>
 
 </html>
