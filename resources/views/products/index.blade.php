@@ -22,10 +22,12 @@
         @endif
 
         <div class="categories">
-            <a href="{{ route('products.create') }}"
-                class="bg-blue-600 text-black px-4 py-2 rounded shadow hover:bg-gray-500 transition">
-                + Agregar Producto
-            </a>
+            <div class="flex justify-between items-center mb-4">
+                <a href="{{ route('products.create') }}"
+                class="bg-green-600 text-white px-8 py-3 text-lg rounded shadow hover:bg-green-700 transition mt-[15px] inline-block">
+                    + Agregar Producto
+                </a>
+            </div>
             @if ($products->count() > 0)
                 <div class="overflow-x-auto">
                     <table class="min-w-full border-collapse border border-gray-200 shadow-lg">
