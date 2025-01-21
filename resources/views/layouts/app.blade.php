@@ -11,21 +11,20 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <!-- Agregar Font Awesome -->
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
+    <!-- Vite CSS & JS -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-gray-300-400 font-sans antialiased">
-    {{-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900"> --}}
+<body class="bg-gray-300 font-sans antialiased">
+
     <div class="w-full mx-auto container">
         @include('layouts.navigation')
 
@@ -43,57 +42,64 @@
             {{ $slot }}
         </main>
     </div>
+
     <!-- Scripts específicos de la página -->
     @yield('scripts')
-</body>
 
-</html>
-{{--
-<script>
-    //Confirmación de Eliminacion
-    document.addEventListener('DOMContentLoaded', function() {
-        // Selecciona todos los botones de eliminación
-        const deleteButtons = document.querySelectorAll('.delete-btn');
+    
+    <script>
+        // Inicialización de AOS
+        AOS.init({
+            duration: 1000, // Duración de las animaciones
+            once: true, // Ejecutar la animación solo una vez
+        });
 
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                const id = this.getAttribute('data-id');
-                const form = document.getElementById(`delete-form-${id}`);
+        //Confirmación de Eliminación (solo si es necesario)
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
 
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const id = this.getAttribute('data-id');
+                    const form = document.getElementById(`delete-form-${id}`);
+
+                    Swal.fire({
+                        title: '¿Estás seguro?',
+                        text: "Esta acción no se puede deshacer.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+
+            // Confirmación de Fin de Clase (si es necesario)
+            document.getElementById('end-class-btn')?.addEventListener('click', function() {
                 Swal.fire({
                     title: '¿Estás seguro?',
-                    text: "Esta acción no se puede deshacer.",
+                    text: "¡Esta acción finalizará la clase y no podrá ser revertida!",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Sí, eliminar',
+                    confirmButtonColor: '#f39c12',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, finalizar',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        form.submit();
+                        document.getElementById('end-class-form').submit();
                     }
                 });
             });
         });
-    });
+    </script>
 
-    document.getElementById('end-class-btn').addEventListener('click', function() {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¡Esta acción finalizará la clase y no podrá ser revertida!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#f39c12',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, finalizar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Enviar el formulario
-                document.getElementById('end-class-form').submit();
-            }
-        });
-    });
-</script>
- --}}
+</body>
+
+</html>
