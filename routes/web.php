@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\ProductController;
 
 /*
@@ -39,6 +40,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('categories', CategoryController::class)->except(['show']);
+
+    //Rutas para subcategorias
+    Route::get('subcategories/{id}', [SubcategoryController::class, 'index'])->name('subcategories.index');
+    // Subcategorias por categoría
+    Route::get('/categories/{id}/subcategories', [SubcategoryController::class, 'getSubcategoriesByCategory']);
+
+    Route::get('categories/{category}/subcategories/create', [SubCategoryController::class, 'create'])->name('subcategories.create');
+    Route::post('categories/{category}/subcategories', [SubcategoryController::class, 'store'])->name('subcategories.store');
+    Route::get('categories/{category}/subcategories/{subcategory}/edit', [SubcategoryController::class, 'edit'])->name('subcategories.edit');
+    Route::patch('categories/{category}/subcategories/{subcategory}', [SubcategoryController::class, 'update'])->name('subcategories.update');
+    Route::delete('categories/{category}/subcategories/{subcategory}', [SubcategoryController::class, 'destroy'])->name('subcategories.destroy');
+
     Route::resource('products', ProductController::class)->except(['show']);
     // Ruta para restaurar un producto
     Route::patch('products/{id}/restore', [ProductController::class, 'restore'])->name('products.restore');

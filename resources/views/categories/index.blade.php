@@ -27,70 +27,73 @@
                   class="bg-green-200 text-black px-40 py-16 text-xl rounded shadow hover:bg-green-300 transition mt-[15px] inline-block"
                     + Agregar Categoría>
                 </a> -->
-            <div class="categories">
-                <div class="flex justify-between items-center mb-4">
-                    {{-- <h3 class="text-lg font-semibold">Categorías</h3> --}}
-                    <a href="{{ route('categories.create') }}"
+        <div class="categories">
+            <div class="flex justify-between items-center mb-4">
+                {{-- <h3 class="text-lg font-semibold">Categorías</h3> --}}
+                <a href="{{ route('categories.create') }}"
                     class="bg-green-600 text-white px-8 py-3 text-lg rounded shadow hover:bg-green-700 transition mt-[15px] inline-block">
                     Agregar Categoría
-                    </a>
-                </div>
-        </div>
+                </a>
             </div>
-            @if ($categories->count() > 0)
-                <div class="overflow-x-auto">
-                    <table class="min-w-full border-collapse border border-gray-200 shadow-lg">
-                        <thead class="bg-gray-100 text-gray-800">
-                            <tr>
-                                <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
-                                <th class="border border-gray-300 px-4 py-2 text-left">Nombre</th>
-                                <th class="border border-gray-300 px-4 py-2 text-left">Descripción</th>
-                                <th class="border border-gray-300 px-4 py-2 text-left">Slug</th>
-                                <th class="border border-gray-300 px-4 py-2 text-left">Imagen</th>
-                                <th class="border border-gray-300 px-4 py-2 text-left">Usuario</th>
-                                <th class="border border-gray-300 px-4 py-2 text-left">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($categories as $category)
-                                <tr class="hover:bg-gray-50">
-                                    <td class="border border-gray-300 px-4 py-2">{{ $category->id }}</td>
-                                    <td class="border border-gray-300 px-4 py-2">{{ $category->name }}</td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        {{ $category->description ?? 'Sin descripción' }}</td>
-                                    <td class="border border-gray-300 px-4 py-2">{{ $category->slug }}</td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        @if ($category->image)
-                                            <img src="{{ asset('storage/' . $category->image) }}"
-                                                alt="{{ $category->name }}" class="w-12 h-12 object-cover rounded">
-                                        @else
-                                            <span class="text-gray-500 italic">No disponible</span>
-                                        @endif
-                                    </td>
-                                    <td class="border border-gray-300 px-4 py-2">{{ $category->user->name }}</td>
-                                    <td class="border border-gray-300 px-4 py-2">
-                                        <div class="flex space-x-2">
-                                            <a href="{{ route('categories.edit', $category->id) }}"
-                                                class="text-blue-600 hover:underline">Editar</a>
-                                            <form action="{{ route('categories.destroy', $category->id) }}"
-                                                method="POST"
-                                                onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="text-red-600 hover:underline">Eliminar</button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @else
-                <p class="text-gray-500">No hay categorías disponibles</p>
-            @endif
         </div>
+    </div>
+    @if ($categories->count() > 0)
+        <div class="overflow-x-auto">
+            <table class="min-w-full border-collapse border border-gray-200 shadow-lg">
+                <thead class="bg-gray-100 text-gray-800">
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Nombre</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Descripción</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Slug</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Imagen</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Usuario</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($categories as $category)
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-2">{{ $category->id }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $category->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                {{ $category->description ?? 'Sin descripción' }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $category->slug }}</td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                @if ($category->image)
+                                    <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                                        class="w-12 h-12 object-cover rounded">
+                                @else
+                                    <span class="text-gray-500 italic">No disponible</span>
+                                @endif
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $category->user->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                <div class="flex space-x-2">
+                                    <a href="{{ route('categories.edit', $category->id) }}"
+                                        class="text-blue-600 hover:underline">Editar</a>
+                                    <form action="{{ route('subcategories.index', $category->id) }}" method="GET">
+                                        @csrf
+                                        <button type="submit" class="text-red-600 hover:underline">Sub Cat.</button>
+                                    </form>
+
+                                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
+                                        onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:underline">Eliminar</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @else
+        <p class="text-gray-500">No hay categorías disponibles</p>
+    @endif
+    </div>
 
 
     </div>

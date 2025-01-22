@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Subcategory;
 use App\Models\ProductImage;
 
 class ProductController extends Controller {
@@ -34,8 +35,10 @@ class ProductController extends Controller {
     }
 
     public function store( Request $request ) {
+
         $validatedData = $request->validate( [
             'category_id' => 'required|exists:categories,id',
+            'subcategory_id' => 'nullable|exists:subcategories,id',
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'stock' => 'required|integer|min:0',
@@ -43,13 +46,15 @@ class ProductController extends Controller {
             'is_active' => 'required|boolean',
             'is_in_carousel' => 'required|boolean',
             'images.*' => 'nullable|image|max:2048',
-            'featured_image' => 'nullable|string' // Se validará después de subir las imágenes
+            'featured_image' => 'nullable|string',
         ] );
 
         // Generar slug y asignar usuario
         $validatedData[ 'slug' ] = Str::slug( $request->name );
         $validatedData[ 'user_id' ] = auth()->id();
         $validatedData[ 'created_by' ] = auth()->id();
+        $validatedData[ 'subcategory_id' ] = $request->subcategory_id;
+        // Asignar el campo manualmente
 
         // Crear el producto
         $product = Product::create( $validatedData );
@@ -88,7 +93,11 @@ class ProductController extends Controller {
         $product = Product::findOrFail( $id );
         $categories = Category::orderBy( 'name' )->get();
 
-        return view( 'products.edit', compact( 'product', 'categories' ) );
+        $subcategories = $product->category_id
+        ? Subcategory::where( 'category_id', $product->category_id )->get()
+        : collect();
+
+        return view( 'products.edit', compact( 'product', 'categories', 'subcategories' ) );
 
     }
 
@@ -104,6 +113,8 @@ class ProductController extends Controller {
             'stock' => 'required|integer|min:0',
             'price' => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
+            'subcategory_id' => 'nullable|exists:subcategories,id', // Validar la subcategoría como opcional
+
         ] );
 
         // Buscar el producto por su ID
@@ -116,6 +127,7 @@ class ProductController extends Controller {
             'stock' => $validatedData[ 'stock' ],
             'price' => $validatedData[ 'price' ],
             'category_id' => $validatedData[ 'category_id' ],
+            'subcategory_id' => $validatedData[ 'subcategory_id' ] ?? null, // Establecer null si no se envía
             'updated_by' => auth()->id(), // Registrar el usuario que realizó la actualización
         ] );
 

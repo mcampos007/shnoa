@@ -11,6 +11,7 @@ class Product extends Model {
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'category_id',
+        'subcategory_id',
         'name',
         'description',
         'stock',
@@ -82,6 +83,12 @@ class Product extends Model {
 
     public function scopeByActive( $query, $active ) {
         return $query->where( 'is_active', $active );
+    }
+
+    // Relación con subcategoría
+
+    public function subcategory() {
+        return $this->belongsTo( Subcategory::class );
     }
 
 }

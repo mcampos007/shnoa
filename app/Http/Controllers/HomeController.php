@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Category;
+use App\Models\Subcategory;
 
 use Illuminate\Http\Request;
 
@@ -45,6 +47,7 @@ class HomeController extends Controller {
     //Método para productos
 
     public function products() {
+
         $products = Product::with( 'images' )->get();
         return view( 'products', compact( 'products' ) );
     }
