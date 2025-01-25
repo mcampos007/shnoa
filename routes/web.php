@@ -31,6 +31,10 @@ Route::get('/nosotros', [HomeController::class, 'nosotros'])->name('nosotros');
 Route::get('/wc-products', [HomeController::class, 'products'])->name('wc-products');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
+// Route::get('/ws-categories/{id}', [HomeController::class, 'getCategoryDetails'])->name('ws-categories');
+Route::get('ws-categories/{categoryId}', [HomeController::class, 'getCategoryData']);
+Route::get('ws-subcategories/{subcategoryId}', [HomeController::class, 'getSubcategoryProducts']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -66,8 +70,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('products/{product}/images/{image}/restore', [ProductController::class, 'restoreImage'])->name('products.images.restore');
     // Ruta para eliminar definitivamente una imagen
     Route::delete('products/{product}/images/{image}/force', [ProductController::class, 'forceDeleteImage'])->name('products.images.force');
-
-
 
 });
 
