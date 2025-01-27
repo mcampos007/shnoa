@@ -1,141 +1,124 @@
 <x-webpage>
     <x-slot:title>Bienvenidos a SHNOA</x-slot:title>
-    <!-- Main Content -->
-    <!-- Main Content -->
-    <div class="container">
-        <div class="products-container">
-            <!-- Left Side (Categorias) -->
-            <div class="categories">
-                <h3>CATEGORÍAS</h3>
-                <ul>
-                    <li><a href="#categoria1">CATEGORIA1</a></li>
-                    <li><a href="#categoria2">CATEGORIA2</a></li>
-                    <li><a href="#categoria3">CATEGORIA3</a></li>
-                    <li><a href="#categoria4">CATEGORIA4</a></li>
-                    <li><a href="#categoria5">CATEGORIA5</a></li>
+
+    <div class="container mx-auto p-6">
+        <div class="flex gap-6">
+            <!-- Categorías -->
+            <div class="w-1/4 bg-gray-100 border border-gray-300 rounded-lg p-4">
+                <h3 class="text-lg font-semibold mb-4">CATEGORÍAS</h3>
+                <ul class="space-y-2">
+                    @foreach ($categories as $category)
+                        <li>
+                            <a href="javascript:void(0);" class="text-blue-600 hover:underline font-medium category-link"
+                                data-category-id="{{ $category->id }}">
+                                {{ strtoupper($category->name) }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
 
-            <!-- Right Side (Productos) -->
-            <div class="products">
-                <!-- Categoria 1 -->
-                <section id="categoria1" class="product-category">
-                    <h2>CATEGORIA1</h2>
-                    <div class="product-boxes">
-                        <!-- Producto 1 -->
-                        <div class="product-box">
-                            <img src="ruta/a/producto1.jpg" alt="Producto 1">
-                            <h4>Producto 1</h4>
-                            <p>Stock: 20</p>
-                            <p>Precio: $150</p>
-                        </div>
-                        <!-- Producto 2 -->
-                        <div class="product-box">
-                            <img src="ruta/a/producto2.jpg" alt="Producto 2">
-                            <h4>Producto 2</h4>
-                            <p>Stock: 30</p>
-                            <p>Precio: $200</p>
-                        </div>
-                        <!-- Producto 3 -->
-                        <div class="product-box">
-                            <img src="ruta/a/producto3.jpg" alt="Producto 3">
-                            <h4>Producto 3</h4>
-                            <p>Stock: 15</p>
-                            <p>Precio: $180</p>
-                        </div>
-                        <!-- Producto 4 -->
-                        <div class="product-box">
-                            <img src="ruta/a/producto4.jpg" alt="Producto 4">
-                            <h4>Producto 4</h4>
-                            <p>Stock: 25</p>
-                            <p>Precio: $160</p>
-                        </div>
-                        <!-- Producto 5 -->
-                        <div class="product-box">
-                            <img src="ruta/a/producto5.jpg" alt="Producto 5">
-                            <h4>Producto 5</h4>
-                            <p>Stock: 10</p>
-                            <p>Precio: $220</p>
-                        </div>
-                        <!-- Producto 6 -->
-                        <div class="product-box">
-                            <img src="ruta/a/producto6.jpg" alt="Producto 6">
-                            <h4>Producto 6</h4>
-                            <p>Stock: 40</p>
-                            <p>Precio: $190</p>
-                        </div>
-                    </div>
-                </section>
+            <!-- Subcategorías y Productos -->
+            <div class="flex-1 flex flex-col gap-6">
+                <!-- Subcategorías -->
+                <div class="bg-gray-100 border border-gray-300 rounded-lg p-4" id="subcategories-container">
+                    <p class="text-gray-600">Selecciona una categoría para ver sus subcategorías.</p>
+                </div>
 
-                <!-- Categoria 2 -->
-                <section id="categoria2" class="product-category">
-                    <h2>CATEGORIA2</h2>
-                    <div class="product-boxes">
-                        <!-- Producto 1 -->
-                        <div class="product-box">
-                            <img src="ruta/a/producto7.jpg" alt="Producto 7">
-                            <h4>Producto 7</h4>
-                            <p>Stock: 12</p>
-                            <p>Precio: $250</p>
-                        </div>
-                        <!-- Producto 2 -->
-                        <div class="product-box">
-                            <img src="ruta/a/producto8.jpg" alt="Producto 8">
-                            <h4>Producto 8</h4>
-                            <p>Stock: 8</p>
-                            <p>Precio: $270</p>
-                        </div>
-                        <!-- Producto 3 -->
-                        <div class="product-box">
-                            <img src="ruta/a/producto9.jpg" alt="Producto 9">
-                            <h4>Producto 9</h4>
-                            <p>Stock: 14</p>
-                            <p>Precio: $220</p>
-                        </div>
-                        <!-- Producto 4 -->
-                        <div class="product-box">
-                            <img src="ruta/a/producto10.jpg" alt="Producto 10">
-                            <h4>Producto 10</h4>
-                            <p>Stock: 35</p>
-                            <p>Precio: $240</p>
-                        </div>
-                        <!-- Producto 5 -->
-                        <div class="product-box">
-                            <img src="ruta/a/producto11.jpg" alt="Producto 11">
-                            <h4>Producto 11</h4>
-                            <p>Stock: 18</p>
-                            <p>Precio: $230</p>
-                        </div>
-                        <!-- Producto 6 -->
-                        <div class="product-box">
-                            <img src="ruta/a/producto12.jpg" alt="Producto 12">
-                            <h4>Producto 12</h4>
-                            <p>Stock: 22</p>
-                            <p>Precio: $210</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Repetir las mismas secciones para las otras categorías (Categoria3, Categoria4, Categoria5) -->
-                <!-- Categoría 3 -->
-                <section id="categoria3" class="product-category">
-                    <h2>CATEGORIA3</h2>
-                    <!-- 6 productos similares a los anteriores -->
-                </section>
-
-                <!-- Categoría 4 -->
-                <section id="categoria4" class="product-category">
-                    <h2>CATEGORIA4</h2>
-                    <!-- 6 productos similares a los anteriores -->
-                </section>
-
-                <!-- Categoría 5 -->
-                <section id="categoria5" class="product-category">
-                    <h2>CATEGORIA5</h2>
-                    <!-- 6 productos similares a los anteriores -->
-                </section>
+                <!-- Productos -->
+                <div class="bg-gray-100 border border-gray-300 rounded-lg p-4" id="products-container">
+                    <p class="text-gray-600">Selecciona una categoría para ver sus productos.</p>
+                </div>
             </div>
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('.category-link');
+            const subcategoriesContainer = document.getElementById('subcategories-container');
+            const productsContainer = document.getElementById('products-container');
+
+            links.forEach(link => {
+                link.addEventListener('click', function() {
+                    const categoryId = this.dataset.categoryId;
+
+                    fetch(`ws-categories/${categoryId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('JSON de retorno:', data);
+
+                            // Actualizar subcategorías
+                            subcategoriesContainer.innerHTML = '';
+                            if (data.subcategories.length > 0) {
+                                data.subcategories.forEach(subcategory => {
+                                    const subcategoryLink = document.createElement('a');
+                                    subcategoryLink.href = '#';
+                                    subcategoryLink.textContent = subcategory.name;
+                                    subcategoryLink.className =
+                                        'inline-block bg-blue-500 text-white px-4 py-2 rounded-md m-1 hover:bg-blue-600 subcategory-link';
+                                    subcategoryLink.dataset.subcategoryId = subcategory
+                                        .id;
+
+                                    subcategoryLink.addEventListener('click', function(
+                                        e) {
+                                        e.preventDefault();
+                                        loadSubcategoryProducts(subcategory.id);
+                                    });
+
+                                    subcategoriesContainer.appendChild(subcategoryLink);
+                                });
+                            } else {
+                                subcategoriesContainer.innerHTML =
+                                    '<p class="text-gray-600">No hay subcategorías disponibles.</p>';
+                            }
+
+                            // Actualizar productos
+                            renderProducts(data.products);
+                        })
+                        .catch(error => {
+                            console.error('Error al cargar los datos:', error);
+                            subcategoriesContainer.innerHTML =
+                                '<p class="text-red-500">Error al cargar las subcategorías.</p>';
+                            productsContainer.innerHTML =
+                                '<p class="text-red-500">Error al cargar los productos.</p>';
+                        });
+                });
+            });
+
+            function loadSubcategoryProducts(subcategoryId) {
+                fetch(`ws-subcategories/${subcategoryId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        renderProducts(data.products);
+                    })
+                    .catch(error => {
+                        console.error('Error al cargar los productos de la subcategoría:', error);
+                        productsContainer.innerHTML =
+                            '<p class="text-red-500">Error al cargar los productos de la subcategoría.</p>';
+                    });
+            }
+
+            function renderProducts(products) {
+                productsContainer.innerHTML = '';
+                if (products.length > 0) {
+                    products.forEach(product => {
+                        const productHTML = `
+                            <div class="flex items-center gap-4 p-4 border border-gray-300 rounded-lg mb-4">
+                                <img src="${product.image_path}" alt="${product.name}" class="w-16 h-16 object-cover rounded-md">
+                                <div>
+                                    <h4 class="text-lg font-semibold">${product.name}</h4>
+                                    <p class="text-sm text-gray-600">Stock: ${product.stock}</p>
+                                    <p class="text-sm text-gray-600">Precio: $${parseFloat(product.price).toFixed(2)}</p>
+                                </div>
+                            </div>
+                        `;
+                        productsContainer.innerHTML += productHTML;
+                    });
+                } else {
+                    productsContainer.innerHTML = '<p class="text-gray-600">No hay productos disponibles.</p>';
+                }
+            }
+        });
+    </script>
 </x-webpage>
