@@ -7,7 +7,7 @@ body {
 }
 
 /* Header Styles */
-header {
+/* header {
   background-color: #04a0d7;
   padding: 20px 0;
   text-align: center;
@@ -16,22 +16,22 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: #04a0d7; /* Fondo sólido del encabezado */
-  border-bottom: 5px solid #53b04c; /* Agrego una línea delgada para diferenciar */
+  background: #04a0d7; 
+  border-bottom: 5px solid #53b04c; 
 }
 
 header img {
-  width: 150px; /* Ajusta el tamaño del logo aquí */
-  background-color: white; /* Fondo blanco detrás del logo para destacarlo */
-  padding: 10px; /* Espaciado entre el logo y el fondo */
-  border-radius: 50%; /* Hacer que el fondo del logo sea redondeado */
+  width: 150px; 
+  background-color: white; 
+  padding: 10px; 
+  border-radius: 50%; 
 }
 header h1 {
   margin: 10px 0;
-}
+} */
 
 /* Navbar Styles */
-nav {
+/* nav {
   background-color: #53b04c;
   padding: 10px 0;
   text-align: center;
@@ -48,7 +48,7 @@ nav a {
 
 nav a:hover {
   text-decoration: underline;
-}
+} */
 
 /* Main Container Styles */
 .container {
