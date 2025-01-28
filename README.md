@@ -61,3 +61,22 @@ git commit -m "Resueltos conflictos en la fusión de backend en main"
 ```bash
 git push origin main
 ```
+
+## Configuraciones para el envío de correo
+
+- Debes configurar en .env y para el caso de enviar con gmail habilitar para usarlo en
+
+```bash
+https://myaccount.google.com/apppasswords?pli=1&rapt=AEjHL4MnErtmf5FpsYNlmVcTNUGzl-HIMjBVVR1AzEr_Ue4-i30wX_rUOzO9Wt-e3-swqkvMjKsZG9Gkg1V0Lk7Ot8TkxqgV2rC7LI6pUeiqqUs-QEF33tQ
+```
+
+```bash
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=tu-correo@gmail.com
+MAIL_PASSWORD=tu-contraseña ojo para gmail se debe generar
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=tu-correo@gmail.com
+MAIL_FROM_NAME="Tu Nombre o Empresa"
+```
