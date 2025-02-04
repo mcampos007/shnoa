@@ -1,15 +1,15 @@
 <x-webpage>
     <x-slot:title>Bienvenidos a SHNOA</x-slot:title>
 
-    <div class="container mx-auto p-6">
-        <div class="flex gap-6">
+    <div class="container mx-auto p-8">
+        <div class="flex gap-8">
             <!-- Categorías -->
-            <div class="w-1/4 bg-gray-100 border border-gray-300 rounded-lg p-4">
-                <h3 class="text-lg font-semibold mb-4">CATEGORÍAS</h3>
-                <ul class="space-y-2">
+            <div class="w-1/4 bg-white border border-gray-200 rounded-lg shadow-lg p-4">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">CATEGORÍAS</h3>
+                <ul class="space-y-3">
                     @foreach ($categories as $category)
                         <li>
-                            <a href="javascript:void(0);" class="text-blue-600 hover:underline font-medium category-link"
+                            <a href="javascript:void(0);" class="text-gray-700 text-sm hover:text-indigo-600 transition duration-200 ease-in-out category-link"
                                 data-category-id="{{ $category->id }}">
                                 {{ strtoupper($category->name) }}
                             </a>
@@ -19,15 +19,15 @@
             </div>
 
             <!-- Subcategorías y Productos -->
-            <div class="flex-1 flex flex-col gap-6">
+            <div class="flex-1 flex flex-col gap-8">
                 <!-- Subcategorías -->
-                <div class="bg-gray-100 border border-gray-300 rounded-lg p-4" id="subcategories-container">
-                    <p class="text-gray-600">Selecciona una categoría para ver sus subcategorías.</p>
+                <div class="bg-white border border-gray-200 rounded-lg shadow-lg p-4" id="subcategories-container">
+                    <p class="text-gray-600 text-lg">Selecciona una categoría para ver sus subcategorías.</p>
                 </div>
 
                 <!-- Productos -->
-                <div class="bg-gray-100 border border-gray-300 rounded-lg p-4" id="products-container">
-                    <p class="text-gray-600">Selecciona una categoría para ver sus productos.</p>
+                <div class="bg-white border border-gray-200 rounded-lg shadow-lg p-4" id="products-container">
+                    <p class="text-gray-600 text-lg">Selecciona una categoría para ver sus productos.</p>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@
                                     subcategoryLink.href = '#';
                                     subcategoryLink.textContent = subcategory.name;
                                     subcategoryLink.className =
-                                        'inline-block bg-blue-500 text-white px-4 py-2 rounded-md m-1 hover:bg-blue-600 subcategory-link';
+                                        'inline-block bg-gray-200 text-gray-700 px-4 py-1 rounded-md m-1 hover:bg-gray-300 transition duration-200 ease-in-out subcategory-link';
                                     subcategoryLink.dataset.subcategoryId = subcategory
                                         .id;
 
@@ -104,12 +104,15 @@
                 if (products.length > 0) {
                     products.forEach(product => {
                         const productHTML = `
-                            <div class="flex items-center gap-4 p-4 border border-gray-300 rounded-lg mb-4">
-                                <img src="${product.image_path}" alt="${product.name}" class="w-16 h-16 object-cover rounded-md">
-                                <div>
-                                    <h4 class="text-lg font-semibold">${product.name}</h4>
-                                    <p class="text-sm text-gray-600">Stock: ${product.stock}</p>
-                                    <p class="text-sm text-gray-600">Precio: $${parseFloat(product.price).toFixed(2)}</p>
+                            <div class="w-full max-w-xs bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden mb-8">
+                                <img src="${product.image_path}" alt="${product.name}" class="w-full h-64 object-cover">
+                                <div class="p-4">
+                                    <h4 class="text-lg font-semibold text-gray-800 mb-2">${product.name}</h4>
+                                    <p class="text-sm text-gray-600 mb-2">Stock: ${product.stock}</p>
+                                    <p class="text-sm text-gray-600 mb-4">Precio: $${parseFloat(product.price).toFixed(2)}</p>
+                                    <button class="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-200 ease-in-out">
+                                        Agregar al carrito
+                                    </button>
                                 </div>
                             </div>
                         `;
