@@ -6,6 +6,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ContactController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,7 @@ Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/nosotros', [HomeController::class, 'nosotros'])->name('nosotros');
 Route::get('/wc-products', [HomeController::class, 'products'])->name('wc-products');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::post('/contacto', [ContactController::class, 'sendContactForm'])->name('contact.send');
 
 // Route::get('/ws-categories/{id}', [HomeController::class, 'getCategoryDetails'])->name('ws-categories');
 Route::get('ws-categories/{categoryId}', [HomeController::class, 'getCategoryData']);
