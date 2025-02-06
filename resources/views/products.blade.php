@@ -9,7 +9,8 @@
                 <ul class="space-y-3">
                     @foreach ($categories as $category)
                         <li>
-                            <a href="javascript:void(0);" class="text-gray-700 text-sm hover:text-indigo-600 transition duration-200 ease-in-out category-link"
+                            <a href="javascript:void(0);"
+                                class="text-gray-700 text-sm hover:text-indigo-600 transition duration-200 ease-in-out category-link"
                                 data-category-id="{{ $category->id }}">
                                 {{ strtoupper($category->name) }}
                             </a>

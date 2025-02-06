@@ -2,7 +2,7 @@
     <x-slot name="header">
         {{-- <h2 style="font-size: 1.5rem; color: #f39c12; font-weight: bold; text-align: center;"> --}}
         <h2 class="text-2xl font-bold text-center font-weight-bold text-gray-500">
-            {{ __('Dashboard') }}
+            {{ __('Panel de Control') }}
         </h2>
 
     </x-slot>

@@ -92,7 +92,10 @@ class HomeController extends Controller {
     public function getSubcategoryProducts(int $subcategoryId): JsonResponse
     {
         // Buscar la subcategoría
-        $subcategory = Subcategory::with('products')->find($subcategoryId);
+        // $subcategory = Subcategory::with('products')->find($subcategoryId);
+        // Buscar la subcategoría con los productos y sus imágenes
+        $subcategory = Subcategory::with('products.images')->find($subcategoryId);
+
 
         // Verificar si la subcategoría existe
         if (!$subcategory) {
@@ -108,7 +111,10 @@ class HomeController extends Controller {
                     'name' => $product->name,
                     'stock' => $product->stock,
                     'price' => $product->price,
-                    'image_path' => $product->image_path,
+                    'image_path' => $product->images->isNotEmpty()
+                    ? asset('storage/' . $product->images->first()->image_path)
+                    : asset('images/default.png'), // Imagen por defecto si no hay imagen asociada
+
                 ];
             }),
         ]);

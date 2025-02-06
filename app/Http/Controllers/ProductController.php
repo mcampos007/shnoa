@@ -114,6 +114,7 @@ class ProductController extends Controller {
             'price' => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
             'subcategory_id' => 'nullable|exists:subcategories,id', // Validar la subcategoría como opcional
+            'is_in_carousel' => 'nullable|boolean',
 
         ] );
 
@@ -129,6 +130,7 @@ class ProductController extends Controller {
             'category_id' => $validatedData[ 'category_id' ],
             'subcategory_id' => $validatedData[ 'subcategory_id' ] ?? null, // Establecer null si no se envía
             'updated_by' => auth()->id(), // Registrar el usuario que realizó la actualización
+            'is_in_carousel' => $request->has( 'is_in_carousel' ),
         ] );
 
         // Redirigir con un mensaje de éxito

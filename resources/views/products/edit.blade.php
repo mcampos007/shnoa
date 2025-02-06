@@ -35,6 +35,17 @@
                     @enderror
                 </div>
 
+                <!-- Campo para determinar si el producto está en el carrusel -->
+                <div class="mb-4 flex items-center">
+                    <input type="checkbox" name="is_in_carousel" id="is_in_carousel" value="1"
+                        class="h-5 w-5 text-green-500 border-gray-300 rounded focus:ring-2 focus:ring-green-500"
+                        {{ old('is_in_carousel', $product->is_in_carousel) ? 'checked' : '' }}>
+                    <label for="is_in_carousel" class="ml-2 text-lg font-semibold text-gray-700">
+                        ¿Incluir en el carrusel?
+                    </label>
+                </div>
+
+
                 <!-- Campo para el stock -->
                 <div class="mb-4">
                     <label for="stock" class="block text-lg font-semibold text-gray-700">Stock</label>
@@ -110,46 +121,45 @@
     </div>
 
 </x-app-layout>
-@script
-    <script>
-        document.getElementById('category_id').addEventListener('change', function() {
-            const categoryId = this.value;
-            const subcategorySelect = document.getElementById('subcategory_id');
 
-            // Limpiar las opciones previas
-            subcategorySelect.innerHTML =
-                '<option value="" selected>Seleccione una subcategoría (opcional)</option>';
+<script>
+    document.getElementById('category_id').addEventListener('change', function() {
+        const categoryId = this.value;
+        const subcategorySelect = document.getElementById('subcategory_id');
 
-            // Llamada AJAX
-            if (categoryId) {
-                fetch(`/categories/${categoryId}/subcategories`)
-                    .then(response => response.json())
-                    .then(data => {
-                        data.forEach(subcategory => {
-                            const option = document.createElement('option');
-                            option.value = subcategory.id;
-                            option.textContent = subcategory.name;
-                            subcategorySelect.appendChild(option);
-                        });
+        // Limpiar las opciones previas
+        subcategorySelect.innerHTML =
+            '<option value="" selected>Seleccione una subcategoría (opcional)</option>';
 
-                        // Seleccionar subcategoría actual si existe
-                        const currentSubcategoryId = "{{ $product->subcategory_id }}";
-                        if (currentSubcategoryId) {
-                            subcategorySelect.value = currentSubcategoryId;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error al cargar subcategorías:', error);
+        // Llamada AJAX
+        if (categoryId) {
+            fetch(`/categories/${categoryId}/subcategories`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(subcategory => {
+                        const option = document.createElement('option');
+                        option.value = subcategory.id;
+                        option.textContent = subcategory.name;
+                        subcategorySelect.appendChild(option);
                     });
-            }
-        });
 
-        // Seleccionar subcategoría actual al cargar la página
-        document.addEventListener('DOMContentLoaded', function() {
-            const categoryId = document.getElementById('category_id').value;
-            if (categoryId) {
-                document.getElementById('category_id').dispatchEvent(new Event('change'));
-            }
-        });
-    </script>
-@endscript
+                    // Seleccionar subcategoría actual si existe
+                    const currentSubcategoryId = "{{ $product->subcategory_id }}";
+                    if (currentSubcategoryId) {
+                        subcategorySelect.value = currentSubcategoryId;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar subcategorías:', error);
+                });
+        }
+    });
+
+    // Seleccionar subcategoría actual al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+        const categoryId = document.getElementById('category_id').value;
+        if (categoryId) {
+            document.getElementById('category_id').dispatchEvent(new Event('change'));
+        }
+    });
+</script>
