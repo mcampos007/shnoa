@@ -14,5 +14,10 @@ class UserSeeder extends Seeder {
             'email' => 'sistema@shnoa.com.ar',
             'password' => bcrypt( 'p@ssword' ), // El password debe estar hasheado
         ] );
+        User::create( [
+            'name' => 'belen',
+            'email' => 'belen@shnoa.com.ar',
+            'password' => bcrypt( 'barco.vela.blanca' ), // El password debe estar hasheado
+        ] );
     }
 }
