@@ -11,6 +11,7 @@ class ContactController extends Controller
     //
     public function sendContactForm(Request $request)
     {
+        $mailContact = 'consultas@shnoa.com.ar';
         // Validar los datos del formulario
         $validated = $request->validate([
             'nombre' => 'required|string|max:255',
@@ -26,8 +27,15 @@ class ContactController extends Controller
         ];
 
         // Enviar el correo
-        Mail::send([], [], function ($message) use ($data) {
-            $message->to(env('MAIL_USERNAME')) // Cambia por tu correo
+        // Mail::send([], [], function ($message) use ($data) {
+        //     $message->to(env('MAIL_USERNAME')) // Cambia por tu correo
+        //         ->subject('Nuevo mensaje de contacto')
+        //         ->text("Nombre: {$data['nombre']}\nCorreo: {$data['email']}\n\nMensaje:\n{$data['mensaje']}")
+        //         ->replyTo($data['email']);
+        // });
+
+        Mail::send([], [], function ($message) use ($data, $mailContact) {
+            $message->to($mailContact) // Cambia por tu correo
                 ->subject('Nuevo mensaje de contacto')
                 ->text("Nombre: {$data['nombre']}\nCorreo: {$data['email']}\n\nMensaje:\n{$data['mensaje']}")
                 ->replyTo($data['email']);
