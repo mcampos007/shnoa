@@ -6,10 +6,11 @@
         <section class="space-y-24">
             <!-- Sección Nosotros: Texto sin animación en el h2 -->
             <div class="text-center space-y-4">
-                <h2 class="text-4xl font-semibold text-gray-800">Sobre Nosotros</h2>
+                <h2 class="text-4xl font-semibold text-gray-800">SHNOA</h2>
                 <!-- Primer párrafo con animación más lenta -->
                 <p class="text-lg text-gray-600 max-w-3xl mx-auto opacity-0 transform translate-y-10 transition-all duration-[4000ms] ease-out" id="intro-text-p">
-                    En <strong>SHNOA</strong> (Servicios Higiénicos del NOA), nos especializamos en ofrecer productos de higiene y limpieza de alta calidad para empresas y hogares en toda la región del Noroeste Argentino. Con más de 10 años de experiencia en el mercado, somos un referente en el suministro de productos esenciales para mantener espacios limpios y saludables.
+                SOMOS UNA EMPRESA, DEDICADA A LA ELABORACION, VENTA Y DISTRIBUCION DE INSUMOS Y EQUIPAMIENTOS  DE LIMPIEZA. </br>
+                CON MAS DE 10 AÑOS EN EL RUBRO, COMENZAMOS COMO UN MICRO EMPRENDIMIENTO FAMILIAR, QUE, CON MUCHO TRABAJO Y DEDICACION,  FUIMOS  LOGRANDO INGRESAR A UN MERCADO MAS AMPLIO Y COMPETITIVO COMO ES EL NOROESTE ARGENTINO, PARA LO CUAL   CONTAMOS CON UNA AMPLIA GAMA DE PRODUCTOS DE LIMPIEZA PARA USO, DOMESTICO, INDUSTRIAL E INSTITUCIONAL, ENTREGANDO  LA MEJOR RELACION PRECIO/ CALIDAD DEL MERCADO. 
                 </p>
             </div>
 
@@ -18,8 +19,8 @@
                 <!-- Bloque 1: Imagen izquierda, texto derecha -->
                 <div class="grid md:grid-cols-2 gap-12 items-center opacity-0 transform translate-y-10 transition-all duration-800 ease-out fade-in-up" data-aos="fade-up" data-aos-delay="200">
                     <div class="space-y-4 text-lg text-gray-600 bg-white p-6 shadow-xl rounded-xl transition-all duration-800 ease-out">
-                        <h3 class="text-3xl font-semibold text-gray-800">Nuestra Historia</h3>
-                        <p>Fundada en 2014, SHNOA nació con el objetivo de ofrecer productos innovadores y de alta calidad en el área de la higiene. Desde entonces, hemos crecido constantemente y expandido nuestra línea de productos para cubrir las necesidades de nuestros clientes en diferentes sectores, incluyendo hospitales, industrias y hogares.</p>
+                        <!-- <h3 class="text-3xl font-semibold text-gray-800">Nuestra Historia</h3> -->
+                        <p>ENTENDIENDO QUE ESTAMOS EN UN MUNDO  CADA DIA MAS EXIGENTE CONTAMOS CON PRODUCTOS QUIMICOS, INSUMOS Y EQUIPAMIENTOS  QUE ESTAN DIRIGIDOS A CADA PROBLEMÁTICA DE HIGIENE EN PARTICULAR, ATENDIENDO A NUESTROS DISTINGIDOS CLIENTES DE MANERA PERSONAL Y EFICIENTE, OFRECIENDOLES UNA RESPUESTA RAPIDA Y CONCRETA A CADA NECESIDAD  A TRAVES DE PRODUCTOS DE EXELENTE CALIDAD Y ESPECIFICOS PARA CADA DEMANDA</p>
                     </div>
                     <div>
                         <img src="../ASSETS/nos1.jpg" alt="Historia de SHNOA" class="rounded-xl shadow-xl transform opacity-0 scale-95 transition-all duration-1000 ease-in-out" data-aos="zoom-in" data-aos-delay="100">
@@ -32,16 +33,16 @@
                         <img src="../ASSETS/nos2.jpg" alt="Misión de SHNOA" class="rounded-xl shadow-xl transform opacity-0 scale-95 transition-all duration-1000 ease-in-out" data-aos="zoom-in" data-aos-delay="100">
                     </div>
                     <div class="space-y-4 text-lg text-gray-600 bg-white p-6 shadow-xl rounded-xl transition-all duration-800 ease-out">
-                        <h3 class="text-3xl font-semibold text-gray-800">Misión</h3>
-                        <p>Nos dedicamos a ofrecer productos que promuevan la higiene y el bienestar de las personas, asegurando un ambiente saludable y seguro. Nuestra misión es ser líderes en el mercado regional, comprometidos con la calidad y la sostenibilidad.</p>
+                        <!-- <h3 class="text-3xl font-semibold text-gray-800">Misión</h3> -->
+                        <p>CONTAMOS TAMBIEN CON NUESTRA PROPIA RED LOGISTICA, LOGRANDO CON ESTO ASEGURAR QUE NUESTROS PRODUCTOS LLEGUEN SEGUROS A LA PUERTA DE SU CASA, NEGOCIO, INSTITUCION, O INDUSTRIA  </p>
                     </div>
                 </div>
 
                 <!-- Bloque 3: Imagen izquierda, texto derecha -->
                 <div class="grid md:grid-cols-2 gap-12 items-center opacity-0 transform translate-y-10 transition-all duration-800 ease-out fade-in-up" data-aos="fade-up" data-aos-delay="400">
                     <div class="space-y-4 text-lg text-gray-600 bg-white p-6 shadow-xl rounded-xl transition-all duration-800 ease-out">
-                        <h3 class="text-3xl font-semibold text-gray-800">Visión</h3>
-                        <p>Aspiramos a ser una empresa referente en la región en cuanto a la innovación en productos de higiene. Queremos llegar a más hogares y empresas, ayudando a mejorar la calidad de vida de las personas a través de productos eficaces y accesibles.</p>
+                        <h3 class="text-3xl font-semibold text-gray-800">MISION </h3>
+                        <p>NUESTRA MISION ES HACER QUE NUESTROS CLIENTES CUENTEN CON EL PRODUCTO ADECUADO PARA SU SITUACION DE HIGIENE EN PARTICULAR, ENTREGANDO NUESTROS PRODUCTOS DE MANERA RAPIDA Y SEGURA, AYUDANDOLOS CON  LA INFORMACION SUFICIENTE PARA EL MANEJO RESPONSABLE DE CADA PRODUCTO. </p>
                     </div>
                     <div>
                         <img src="../ASSETS/nos3.jpg" alt="Productos de SHNOA" class="rounded-xl shadow-xl transform opacity-0 scale-95 transition-all duration-1000 ease-in-out" data-aos="zoom-in" data-aos-delay="100">
@@ -54,8 +55,8 @@
                         <img src="../ASSETS/nos4.jpg" alt="Valores de SHNOA" class="rounded-xl shadow-xl transform opacity-0 scale-95 transition-all duration-1000 ease-in-out" data-aos="zoom-in" data-aos-delay="100">
                     </div>
                     <div class="space-y-4 text-lg text-gray-600 bg-white p-6 shadow-xl rounded-xl transition-all duration-800 ease-out">
-                        <h3 class="text-3xl font-semibold text-gray-800">Valores</h3>
-                        <p>En SHNOA, nos guiamos por valores de confianza, compromiso, calidad, y respeto por el medio ambiente. Creemos firmemente en la importancia de un entorno limpio y saludable, y trabajamos para hacer realidad ese objetivo en cada producto que ofrecemos.</p>
+                        <h3 class="text-3xl font-semibold text-gray-800">SHNOA "UNA NUEVA FORMA DE LIMPIAR"</h3>
+                        <p>NUESTRA MISION ES LOGRAR A TRAVES DE NUESTROS PRODUCTOS, QUE LA LIMPIEZA NO SEA VISTA COMO UN TRABAJO INSALUBRE Y PESADO, DONDE EL CLIENTE TERMINA PAGANDO UN ALTO COSTO POR UN PRODUCTO QUE NO LE DA EL RESULTADO ESPERADO, SINO QUE A TRAVES DE PRODUCTOS ESPECIFICOS PUEDA MANTENER SU AMBIENTE HIGIENIZADO DE MANERA FACIL Y EFICIENTE.</p>
                     </div>
                 </div>
             </div>
