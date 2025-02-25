@@ -83,7 +83,8 @@ class CategoryController extends Controller {
     */
 
     public function update( Request $request, string $id ) {
-        //
+
+        // dd( $request->all() );
         $validatedData = $request->validate( [
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:500',
@@ -99,10 +100,17 @@ class CategoryController extends Controller {
         $validatedData[ 'slug' ] = Str::slug( $request->input( 'name' ), '-' );
 
         if ( $request->hasFile( 'image' ) ) {
-            $path = $request->file( 'image' )->store( 'categories', 'public' );
-            $validatedData[ 'image' ] = $path;
-        }
+            $file = $request->file( 'image' );
 
+            // Verificar que el archivo es válido antes de almacenarlo
+            if ( $file->isValid() ) {
+                // Guardar el archivo y obtener la ruta
+                $path = $file->store( 'categories', 'public' );
+                $validatedData[ 'image' ] = $path;
+            } else {
+                return back()->withErrors( [ 'image' => 'El archivo no es válido.' ] );
+            }
+        }
         $category->update( $validatedData );
 
         return redirect()->route( 'categories.index' )->with( 'success', 'Categoría actualizada exitosamente.' );

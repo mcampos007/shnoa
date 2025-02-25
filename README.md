@@ -80,3 +80,7 @@ MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=tu-correo@gmail.com
 MAIL_FROM_NAME="Tu Nombre o Empresa"
 ```
+
+### consideraciones sobre php 8.2
+
+- Para el registro de las imágenes se debe tner acceso a storage/public y re3visar .env y en /config/filesystems.php
