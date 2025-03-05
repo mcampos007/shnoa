@@ -47,7 +47,9 @@
                     fetch(`ws-categories/${categoryId}`)
                         .then(response => response.json())
                         .then(data => {
-                            console.log('JSON de retorno:', data);
+
+                            // console.log('JSON de retorno:', data);
+                            // alert('JSON de retorno: ' + JSON.stringify(data));
 
                             // Actualizar subcategorías
                             subcategoriesContainer.innerHTML = '';
@@ -104,16 +106,22 @@
                 productsContainer.innerHTML = '';
                 if (products.length > 0) {
                     products.forEach(product => {
+
+                        // <button class="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-200 ease-in-out">
+                        //                  Agregar al carrito
+                        //              </button>
+                        const cartAddUrl = "{{ url('/cart/add') }}/";
                         const productHTML = `
                             <div class="w-full max-w-xs bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden mb-8">
-                                <img src="${product.image_path}" alt="${product.name}" class="w-full h-64 object-cover">
+                                <img src="storage/${product.image_path}" alt="${product.name}" class="w-full h-64 object-cover">
                                 <div class="p-4">
                                     <h4 class="text-lg font-semibold text-gray-800 mb-2">${product.name}</h4>
                                     <p class="text-sm text-gray-600 mb-2">Stock: ${product.stock}</p>
                                     <p class="text-sm text-gray-600 mb-4">Precio: $${parseFloat(product.price).toFixed(2)}</p>
-                                    <button class="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-200 ease-in-out">
-                                        Agregar al carrito
-                                    </button>
+
+                                    <a href="${cartAddUrl}${product.id}" class="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-200 ease-in-out">
+                                         Agregar al carrito
+                                     </a>
                                 </div>
                             </div>
                         `;

@@ -34,6 +34,18 @@ Route::get('/wc-products', [HomeController::class, 'products'])->name('wc-produc
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contacto', [ContactController::class, 'sendContactForm'])->name('contact.send');
 
+//Rutas para el cart
+Route::get('/cart', [HomeController::class, 'cart'])->name('cart.index');
+//Ruta para llamar a la método de agregar al carrito que debe llamar la vista con los datos del producto y los botones para agregar al carrito
+Route::get('/cart/add/{id}', [HomeController::class, 'viewAddToCart'])->name('cart.add');
+Route::post('/cart/add', [HomeController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/send-order', [HomeController::class, 'sendOrder'])->name('cart.sendOrder');
+
+Route::post('/cart/update-quantity', [HomeController::class, 'updateQuantity'])->name('cart.updateQuantity');
+Route::post('/cart/remove-item', [HomeController::class, 'removeItem'])->name('cart.removeItem');
+
+
+
 // Route::get('/ws-categories/{id}', [HomeController::class, 'getCategoryDetails'])->name('ws-categories');
 Route::get('ws-categories/{categoryId}', [HomeController::class, 'getCategoryData']);
 Route::get('ws-subcategories/{subcategoryId}', [HomeController::class, 'getSubcategoryProducts']);

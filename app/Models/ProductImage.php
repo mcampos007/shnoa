@@ -38,6 +38,25 @@ class ProductImage extends Model {
         return $query->where( 'is_featured', true );
     }
 
+
+    public function scopeForCarousel($query) {
+        return $query->with(['product:id,name,description'])
+            ->whereHas('product', function ($q) {
+                $q->where('is_in_carousel', true)
+                  ->where('is_active', true);
+            })
+            ->where(function ($q) {
+                $q->where('is_featured', true)
+                  ->orWhereIn('id', function ($subQuery) {
+                      $subQuery->selectRaw('MIN(id)')
+                               ->from('product_images')
+                               ->groupBy('product_id');
+                  });
+            })
+            ->orderBy('product_id')
+            ->orderByDesc('is_featured');
+    }
+
     public function getRouteKeyName() {
         return 'image_path';
     }

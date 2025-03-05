@@ -3,6 +3,7 @@
     <div class="text-center">
         <!-- Derechos Reservados -->
         <p>&copy; {{ date('Y') }} SHNOA - Todos los derechos reservados.</p>
+        <p>Powered by <a href="http://www.infocam.com.ar">InfoCam </a></p>
     </div>
 
     <div class="text-center mt-4">

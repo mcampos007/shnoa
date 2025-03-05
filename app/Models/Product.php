@@ -33,6 +33,22 @@ class Product extends Model {
         return $this->hasMany( ProductImage::class );
     }
 
+    // public function featuredOrFirstImage() {
+    //     return $this->hasOne(ProductImage::class)
+    //         ->where('is_featured', true)
+    //         ->orWhereIn('id', function ($query) {
+    //             $query->selectRaw('MIN(id)')
+    //                   ->from('product_images')
+    //                   ->whereColumn('product_id', 'product_images.product_id');
+    //         });
+    // }
+
+    public function featuredOrFirstImage() {
+        return $this->hasOne(ProductImage::class)
+            ->whereNull('deleted_at')  // Asegura que no sea una imagen eliminada
+            ->orderBy('is_featured', 'desc')  // Da preferencia a la imagen destacada
+            ->orderBy('id', 'asc');  // Toma la primera imagen si no hay destacada
+    }
     public function user() {
         return $this->belongsTo( User::class );
     }
