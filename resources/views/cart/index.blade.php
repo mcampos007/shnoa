@@ -1,5 +1,16 @@
 <x-webpage>
     <x-slot:title>Carrito de Compras</x-slot:title>
+    @if (session('success'))
+        <div class="bg-green-500 text-white p-4 rounded mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="bg-red-500 text-white p-4 rounded mb-4">
+            {{ session('error') }}
+        </div>
+    @endif
 
     <div class="container mx-auto p-4">
         <h1 class="text-2xl font-bold mb-4">Detalle del Pedido</h1>

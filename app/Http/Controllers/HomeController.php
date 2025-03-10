@@ -5,7 +5,15 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Category;
 use App\Models\Subcategory;
+use App\Models\Order;
+use App\Models\OrderItem;
+
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
+//use Barryvdh\DomPDF\Facade as PDF;
+//use Barryvdh\DomPDF\PDF;
+use PDF;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -61,7 +69,7 @@ class HomeController extends Controller {
     public function getCategoryData(int $categoryId): JsonResponse
     {
         // Buscar la categoría
-    //    $category = Category::with('subcategories', 'products')->find($categoryId);
+        //    $category = Category::with('subcategories', 'products')->find($categoryId);
         // Buscar la categoría con subcategorías y productos con la imagen destacada o la primera disponible
         // $category = Category::with([
         //     'subcategories:id,name',
@@ -71,59 +79,38 @@ class HomeController extends Controller {
         //     ])->find($categoryId);
 
         // Buscar la categoría con subcategorías y productos con la imagen destacada o la primera disponible
-    $category = Category::with([
-        'subcategories:id,name',
-        'products.featuredOrFirstImage' => function ($query) {
-            $query->select('id', 'product_id', 'image_path');
-        }
-    ])->find($categoryId);
-
-
-        // Verificar si la categoría existe
-        if (!$category) {
+        $category = Category::with([
+            'subcategories:id,name',
+            'products.featuredOrFirstImage' => function ($query) {
+                $query->select('id', 'product_id', 'image_path');
+            }
+        ])->find($categoryId);
+            // Verificar si la categoría existe
+            if (!$category) {
+                return response()->json([
+                    'error' => 'Categoría no encontrada.',
+                ], 404);
+            }
             return response()->json([
-                'error' => 'Categoría no encontrada.',
-            ], 404);
-        }
+                'subcategories' => $category->subcategories->map(function ($subcategory) {
+                    return [
+                        'id' => $subcategory->id,
+                        'name' => $subcategory->name,
+                    ];
+                }),
+                'products' => $category->products->map(function ($product) {
+                    // Verifica si el producto tiene una imagen destacada o la primera imagen disponible
+                    $imagePath = $product->featuredOrFirstImage ? $product->featuredOrFirstImage->image_path : null;
 
-        // return response()->json([
-        //     'subcategories' => $category->subcategories->map(function ($subcategory) {
-        //         return [
-        //             'id' => $subcategory->id,
-        //             'name' => $subcategory->name,
-        //         ];
-        //     }),
-        //     'products' => $category->products->map(function ($product) {
-        //         return [
-        //             'id' => $product->id,
-        //             'name' => $product->name,
-        //             'stock' => $product->stock,
-        //             'price' => $product->price,
-        //             'image_path' => $product->image_path,
-        //         ];
-        //     }),
-        // ]);
-
-        return response()->json([
-            'subcategories' => $category->subcategories->map(function ($subcategory) {
-                return [
-                    'id' => $subcategory->id,
-                    'name' => $subcategory->name,
-                ];
-            }),
-            'products' => $category->products->map(function ($product) {
-                // Verifica si el producto tiene una imagen destacada o la primera imagen disponible
-                $imagePath = $product->featuredOrFirstImage ? $product->featuredOrFirstImage->image_path : null;
-
-                return [
-                    'id' => $product->id,
-                    'name' => $product->name,
-                    'stock' => $product->stock,
-                    'price' => $product->price,
-                    'image_path' => $imagePath,  // Usar la imagen cargada desde la relación
-                ];
-            }),
-        ]);
+                    return [
+                        'id' => $product->id,
+                        'name' => $product->name,
+                        'stock' => $product->stock,
+                        'price' => $product->price,
+                        'image_path' => $imagePath,  // Usar la imagen cargada desde la relación
+                    ];
+                }),
+            ]);
     }
 
         /**
@@ -191,7 +178,7 @@ class HomeController extends Controller {
             ];
         }
 
-    // Guardar el carrito actualizado en la sesión
+        // Guardar el carrito actualizado en la sesión
         session()->put('cart', $cart);
         // Redirigir a la página del carrito
         return redirect()->route('wc-products');
@@ -240,42 +227,102 @@ class HomeController extends Controller {
             return redirect()->back()->with('error', 'El carrito está vacío.');
         }
 
-        // Información del cliente
-        $customerData = $request->only('name', 'email', 'phone', 'observations');
+        DB::beginTransaction();
 
-        // Preparar el contenido del correo
-        $orderDetails = "";
-        $total = 0;
+        try {
+            // Calcular el total del pedido
+            $total = array_reduce($cart, function ($carry, $item) {
+                return $carry + ($item['product']->price * $item['quantity']);
+            }, 0);
 
-        foreach ($cart as $item) {
-            $subtotal = $item['product']->price * $item['quantity'];
-            $orderDetails .= "Producto: {$item['product']->name}\n";
-            $orderDetails .= "Cantidad: {$item['quantity']}\n";
-            $orderDetails .= "Precio Unitario: $" . number_format($item['product']->price, 2) . "\n";
-            $orderDetails .= "Subtotal: $" . number_format($subtotal, 2) . "\n\n";
-            $total += $subtotal;
+            // Crear el registro de la orden
+            $order = Order::create([
+                'customer_name' => $request->input('name'),
+                'customer_email' => $request->input('email'),
+                'customer_phone' => $request->input('phone'),
+                'observations' => $request->input('observation'),
+                'total' => $total,
+            ]);
+
+            // Crear los registros de los productos del pedido
+            foreach ($cart as $item) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $item['product']->id,
+                    'quantity' => $item['quantity'],
+                    'price' => $item['product']->price,
+                ]);
+            }
+
+           // Generar el PDF con los detalles del pedido
+           //$pdf = app(PDF::class);
+           $pdf = PDF::loadView('cart.pedido_pdf', compact('order'));
+           // $pdf = $pdf->loadView('pedido_pdf', compact('order'));
+            $pdfPath = 'pedidos/pedido_' . $order->id . '.pdf';
+            Storage::put('public/' . $pdfPath, $pdf->output());
+
+            // Enviar el correo con el PDF adjunto
+            Mail::raw(
+                "Nuevo Pedido Recibido\n\n" .
+                "Nombre: {$order->customer_name}\n" .
+                "Correo: {$order->customer_email}\n" .
+                "Teléfono: {$order->customer_phone}\n\n" .
+                "Se adjunta el PDF con los detalles del pedido.",
+                function ($message) use ($order, $pdfPath) {
+                    $message->to('mcampos@infocam.com.ar')
+                            ->subject('Nuevo Pedido de ' . $order->customer_name)
+                            ->attach(Storage::path('public/' . $pdfPath));
+                }
+            );
+
+            DB::commit();
+
+            // Limpiar el carrito
+            session()->forget('cart');
+
+            return redirect()->route('index')->with('success', 'Pedido guardado y enviado correctamente.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Hubo un problema al guardar el pedido.');
         }
 
-        $orderDetails .= "Total del Pedido: $" . number_format($total, 2) . "\n";
-        $orderDetails .= "Observación: " . ($customerData['observations'] ?? 'Sin observaciones') . "\n";
 
-        // Enviar el correo
-        Mail::raw(
-            "Nuevo Pedido Recibido\n\n" .
-            "Nombre: {$customerData['name']}\n" .
-            "Correo: {$customerData['email']}\n" .
-            "Teléfono: {$customerData['phone']}\n\n" .
-            "Detalles del Pedido:\n" . $orderDetails,
-            function ($message) use ($customerData) {
-                $message->to('mcampos@infocam.com.ar')
-                        ->subject('Nuevo Pedido de ' . $customerData['name']);
-            }
-        );
+        // // Información del cliente
+        // $customerData = $request->only('name', 'email', 'phone', 'observations');
 
-        // Limpiar el carrito
-        session()->forget('cart');
+        // // Preparar el contenido del correo
+        // $orderDetails = "";
+        // $total = 0;
 
-        return redirect()->route('index')->with('success', 'Pedido enviado correctamente.');
+        // foreach ($cart as $item) {
+        //     $subtotal = $item['product']->price * $item['quantity'];
+        //     $orderDetails .= "Producto: {$item['product']->name}\n";
+        //     $orderDetails .= "Cantidad: {$item['quantity']}\n";
+        //     $orderDetails .= "Precio Unitario: $" . number_format($item['product']->price, 2) . "\n";
+        //     $orderDetails .= "Subtotal: $" . number_format($subtotal, 2) . "\n\n";
+        //     $total += $subtotal;
+        // }
+
+        // $orderDetails .= "Total del Pedido: $" . number_format($total, 2) . "\n";
+        // $orderDetails .= "Observación: " . ($customerData['observations'] ?? 'Sin observaciones') . "\n";
+
+        // // Enviar el correo
+        // Mail::raw(
+        //     "Nuevo Pedido Recibido\n\n" .
+        //     "Nombre: {$customerData['name']}\n" .
+        //     "Correo: {$customerData['email']}\n" .
+        //     "Teléfono: {$customerData['phone']}\n\n" .
+        //     "Detalles del Pedido:\n" . $orderDetails,
+        //     function ($message) use ($customerData) {
+        //         $message->to('mcampos@infocam.com.ar')
+        //                 ->subject('Nuevo Pedido de ' . $customerData['name']);
+        //     }
+        // );
+
+        // // Limpiar el carrito
+        // session()->forget('cart');
+
+        // return redirect()->route('index')->with('success', 'Pedido enviado correctamente.');
     }
 
 
