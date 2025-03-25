@@ -262,18 +262,25 @@ class HomeController extends Controller {
             Storage::put('public/' . $pdfPath, $pdf->output());
 
             // Enviar el correo con el PDF adjunto
-            Mail::raw(
-                "Nuevo Pedido Recibido\n\n" .
-                "Nombre: {$order->customer_name}\n" .
-                "Correo: {$order->customer_email}\n" .
-                "Teléfono: {$order->customer_phone}\n\n" .
-                "Se adjunta el PDF con los detalles del pedido.",
-                function ($message) use ($order, $pdfPath) {
-                    $message->to('mcampos@infocam.com.ar')
-                            ->subject('Nuevo Pedido de ' . $order->customer_name)
-                            ->attach(Storage::path('public/' . $pdfPath));
-                }
-            );
+            // Mail::raw(
+            //     "Nuevo Pedido Recibido\n\n" .
+            //     "Nombre: {$order->customer_name}\n" .
+            //     "Correo: {$order->customer_email}\n" .
+            //     "Teléfono: {$order->customer_phone}\n\n" .
+            //     "Se adjunta el PDF con los detalles del pedido.",
+            //     function ($message) use ($order, $pdfPath) {
+            //         $message->to('mcampos@infocam.com.ar')
+            //                 ->subject('Nuevo Pedido de ' . $order->customer_name)
+            //                 ->attach(Storage::path('public/' . $pdfPath));
+            //     }
+            // );
+
+            Mail::send([], [], function ($message) use ($order, $pdfPath) {
+                $message->to('mcampos@infocam.com.ar')
+                        ->subject('Nuevo Pedido de ' . $order->customer_name)
+                        ->setBody("Nuevo Pedido Recibido...", 'text/plain')
+                        ->attach(Storage::path('public/' . $pdfPath));
+            });
 
             DB::commit();
 
