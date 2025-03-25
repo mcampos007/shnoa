@@ -34,8 +34,15 @@
             </div>
         @endif
 
-        <h1 class="text-2xl font-semibold mb-4">Lista de Productos</h1>
-
+        <div class="products">
+            <div class="flex justify-between items-center mb-4">
+                <a href="{{ route('products.create') }}"
+                    class="bg-green-600 text-white px-8 py-3 text-lg rounded shadow hover:bg-green-700 transition mt-[15px] inline-block">
+                    Agregar producto
+                </a>
+            </div>
+        </div>
+    </div>
         @if ($products->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full border-collapse border border-gray-200 shadow-lg">
