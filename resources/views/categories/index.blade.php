@@ -34,9 +34,18 @@
             </div>
         @endif
 
+        <form action="{{ route('categories.index') }}" method="GET" class="flex space-x-2">
+            <input type="text" name="search" placeholder="Buscar categoría..." value="{{ request('search') }}"
+                class="border rounded px-3 py-2 text-black">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+                <i class="fa fa-search"></i> Buscar
+            </button>
+        </form>
+
         <div class="categories">
             <div class="flex justify-between items-center mb-4">
-                <a href="{{ route('categories.create') }}" class="bg-green-600 text-white px-8 py-3 text-lg rounded shadow hover:bg-green-700 transition mt-[15px] inline-block">
+                <a href="{{ route('categories.create') }}"
+                    class="bg-green-600 text-white px-8 py-3 text-lg rounded shadow hover:bg-green-700 transition mt-[15px] inline-block">
                     Agregar Categoría
                 </a>
             </div>
@@ -62,11 +71,13 @@
                         <tr class="hover:bg-gray-50">
                             <td class="border border-gray-300 px-4 py-2">{{ $category->id }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $category->name }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $category->description ?? 'Sin descripción' }}</td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                {{ $category->description ?? 'Sin descripción' }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $category->slug }}</td>
                             <td class="border border-gray-300 px-4 py-2">
                                 @if ($category->image)
-                                    <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" class="w-12 h-12 object-cover rounded">
+                                    <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                                        class="w-12 h-12 object-cover rounded">
                                 @else
                                     <span class="text-gray-500 italic">No disponible</span>
                                 @endif
@@ -75,7 +86,8 @@
                             <td class="border border-gray-300 px-4 py-2">
                                 <div class="flex space-x-4">
                                     <!-- Editar -->
-                                    <a href="{{ route('categories.edit', $category->id) }}" class="text-blue-600 hover:text-blue-800">
+                                    <a href="{{ route('categories.edit', $category->id) }}"
+                                        class="text-blue-600 hover:text-blue-800">
                                         <i class="fa fa-pencil-alt"></i>
                                     </a>
 
@@ -88,7 +100,8 @@
                                     </form>
 
                                     <!-- Eliminar -->
-                                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?')">
+                                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST"
+                                        onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:text-red-800">
@@ -101,6 +114,10 @@
                     @endforeach
                 </tbody>
             </table>
+            {{-- Mostrar los enlaces de paginación --}}
+            <div class="mt-4">
+                {{ $categories->links() }}
+            </div>
         </div>
     @else
         <p class="text-gray-500">No hay categorías disponibles</p>

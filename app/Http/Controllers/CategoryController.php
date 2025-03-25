@@ -11,9 +11,15 @@ class CategoryController extends Controller {
     * Display a listing of the resource.
     */
 
-    public function index() {
+    public function index( Request $request ) {
         //
-        $categories = Category::all();
+        // Obtener el término de búsqueda ingresado por el usuario
+        $search = $request->input( 'search' );
+
+        // Si hay búsqueda, filtrar las categorías
+        $categories = Category::where( 'name', 'like', "%$search%" )
+        ->orWhere( 'description', 'like', "%$search%" )
+        ->paginate( 10 );
 
         // Obtiene todas las categorías
         return view( 'categories.index', compact( 'categories' ) );
