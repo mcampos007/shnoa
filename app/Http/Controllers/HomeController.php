@@ -278,7 +278,7 @@ class HomeController extends Controller {
             Mail::send([], [], function ($message) use ($order, $pdfPath) {
                 $message->to('mcampos@infocam.com.ar')
                         ->subject('Nuevo Pedido de ' . $order->customer_name)
-                        ->setBody("Nuevo Pedido Recibido...", 'text/plain')
+                        ->text("Nuevo Pedido Recibido...") // Cambiado de setBody() a text()
                         ->attach(Storage::path('public/' . $pdfPath));
             });
 
