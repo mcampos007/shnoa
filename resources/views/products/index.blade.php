@@ -34,6 +34,12 @@
             </div>
         @endif
 
+        <form action="{{ route('products.index') }}" method="GET">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Buscar producto..."
+                class="border rounded px-3 py-2">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Buscar</button>
+        </form>
+
         <div class="products">
             <div class="flex justify-between items-center mb-4">
                 <a href="{{ route('products.create') }}"
@@ -43,91 +49,95 @@
             </div>
         </div>
     </div>
-        @if ($products->count() > 0)
-            <div class="overflow-x-auto">
-                <table class="min-w-full border-collapse border border-gray-200 shadow-lg">
-                    <thead class="bg-gray-100 text-gray-800">
-                        <tr>
-                            <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Nombre</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Descripción</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Precio</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Estado</th>
-                            <th class="border border-gray-300 px-4 py-2 text-left">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($products as $product)
-                            <tr class="hover:bg-gray-50">
-                                <td class="border border-gray-300 px-4 py-2">{{ $product->id }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $product->name }}</td>
-                                <td class="border border-gray-300 px-4 py-2">{{ $product->description }}</td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    ${{ number_format($product->price, 2) }}
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    {{ $product->trashed() ? 'Eliminado' : 'Activo' }}
-                                </td>
-                                <td class="border border-gray-300 px-4 py-2">
-                                    <div class="flex space-x-2">
-                                        <!-- Editar -->
-                                        @if (!$product->trashed())
-                                            <a href="{{ route('products.edit', $product->id) }}"
+    @if ($products->count() > 0)
+        <div class="overflow-x-auto">
+            <table class="min-w-full border-collapse border border-gray-200 shadow-lg">
+                <thead class="bg-gray-100 text-gray-800">
+                    <tr>
+                        <th class="border border-gray-300 px-4 py-2 text-left">ID</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Nombre</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Descripción</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Precio</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Estado</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($products as $product)
+                        <tr class="hover:bg-gray-50">
+                            <td class="border border-gray-300 px-4 py-2">{{ $product->id }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $product->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $product->description }}</td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                ${{ number_format($product->price, 2) }}
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                {{ $product->trashed() ? 'Eliminado' : 'Activo' }}
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                <div class="flex space-x-2">
+                                    <!-- Editar -->
+                                    @if (!$product->trashed())
+                                        <a href="{{ route('products.edit', $product->id) }}"
                                             class="text-blue-500 hover:text-blue-600 text-lg">
-                                                <i class="fa fa-pencil-alt"></i>
-                                            </a>
-                                        @endif
-
-                                        <!-- Gestionar Imágenes -->
-                                        <a href="{{ route('products.images.manage', $product->id) }}"
-                                            class="text-yellow-500 hover:text-yellow-600 text-lg">
-                                            <i class="fa fa-image"></i>
+                                            <i class="fa fa-pencil-alt"></i>
                                         </a>
+                                    @endif
 
-                                        <!-- Restaurar / Eliminar -->
-                                        @if ($product->trashed())
-                                            <!-- Restaurar -->
-                                            <form action="{{ route('products.restore', $product->id) }}" method="POST" style="display:inline-block;">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="text-green-500 hover:text-green-600 text-lg">
-                                                    <i class="fa fa-trash-restore"></i>
-                                                </button>
-                                            </form>
-                                        @else
-                                            <!-- Eliminar -->
-                                            <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-500 hover:text-red-600 text-lg"
-                                                    onclick="return confirm('¿Estás seguro de eliminar este producto?')">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        @else
-            <div class="bg-yellow-200 text-yellow-800 p-6 rounded-lg shadow-xl w-96 mt-4 mx-auto">
-                <div class="flex justify-between items-center">
-                    <span class="font-semibold">Aviso</span>
-                    <button type="button" class="text-yellow-800" onclick="closeModal('errorModal')">
-                        <i class="fa fa-times"></i>
-                    </button>
-                </div>
-                <p class="mt-2">No hay productos registrados.</p>
-            </div>
-        @endif
+                                    <!-- Gestionar Imágenes -->
+                                    <a href="{{ route('products.images.manage', $product->id) }}"
+                                        class="text-yellow-500 hover:text-yellow-600 text-lg">
+                                        <i class="fa fa-image"></i>
+                                    </a>
 
-        <!-- Paginación -->
-        <div class="mt-4">
-            {{ $products->links() }}
+                                    <!-- Restaurar / Eliminar -->
+                                    @if ($product->trashed())
+                                        <!-- Restaurar -->
+                                        <form action="{{ route('products.restore', $product->id) }}" method="POST"
+                                            style="display:inline-block;">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="text-green-500 hover:text-green-600 text-lg">
+                                                <i class="fa fa-trash-restore"></i>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <!-- Eliminar -->
+                                        <form action="{{ route('products.destroy', $product->id) }}" method="POST"
+                                            style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-500 hover:text-red-600 text-lg"
+                                                onclick="return confirm('¿Estás seguro de eliminar este producto?')">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <!-- Mostrar enlaces de paginación -->
+            {{ $products->appends(['search' => request('search')])->links() }}
         </div>
+    @else
+        <div class="bg-yellow-200 text-yellow-800 p-6 rounded-lg shadow-xl w-96 mt-4 mx-auto">
+            <div class="flex justify-between items-center">
+                <span class="font-semibold">Aviso</span>
+                <button type="button" class="text-yellow-800" onclick="closeModal('errorModal')">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <p class="mt-2">No hay productos registrados.</p>
+        </div>
+    @endif
+
+    <!-- Paginación -->
+    <div class="mt-4">
+        {{ $products->links() }}
+    </div>
     </div>
 
     <script>

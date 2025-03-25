@@ -11,14 +11,20 @@ use App\Models\Subcategory;
 use App\Models\ProductImage;
 
 class ProductController extends Controller {
-    public function index() {
-        // Obtener productos con paginación de 10 registros por página
+    public function index(Request $request)
+    {
+        // Obtener el término de búsqueda ingresado por el usuario
+        $search = $request->input('search');
 
-        $products = Product::withTrashed()->paginate( 10 );
-        // Incluye eliminados
+        // Obtener productos con paginación de 10 registros por página
+        $products = Product::withTrashed()
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%{$search}%");
+            })
+            ->paginate(10);
 
         // Retornar la vista con los productos paginados
-        return view( 'products.index', compact( 'products' ) );
+        return view('products.index', compact('products', 'search'));
     }
 
     /**

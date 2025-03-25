@@ -13,12 +13,26 @@ class SubcategoryController extends Controller {
     * Display a listing of the resource.
     */
 
-    public function index( $id ) {
-        // Obtener la categoría por ID
-        $category = Category::with( 'subcategories' )->findOrFail( $id );
+    public function index(Request $request,  $id ) {
 
-        // Pasar los datos a la vista
-        return view( 'subcategories.index', compact( 'category' ) );
+         // Obtener el término de búsqueda ingresado por el usuario
+         $search = $request->input( 'search' );
+
+
+            // Obtener la categoría
+        $category = Category::findOrFail($id);
+
+        // Filtrar subcategorías con paginación de a 10
+        $subcategories = $category->subcategories()
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'LIKE', "%{$search}%");
+            })
+            ->paginate(10);
+
+
+
+       // Pasar los datos a la vista
+        return view('subcategories.index', compact('category', 'subcategories', 'search'));
     }
     //
 
