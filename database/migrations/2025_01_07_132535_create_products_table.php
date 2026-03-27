@@ -27,6 +27,8 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users'); // Usuario que creó el producto
             $table->foreignId('updated_by')->nullable()->constrained('users'); // Usuario que actualizó el producto
             $table->foreignId('deleted_by')->nullable()->constrained('users'); // Usuario que eliminó el producto
+            $table->string('article_code', 15)->nullable(); // Código de artículo opcional para relacionar con sistema de gestion externa
+
 
             $table->timestamps();
         });

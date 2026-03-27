@@ -1,0 +1,13 @@
+{
+  "name": "laravel-shnoa",
+  "version": "1.0.0",
+  "date": "2026-03-27",
+  "status": "development",
+  "framework": "Laravel 10.x",
+  "php": "8.3-apache",
+  "mysql": "8.0",
+  "redis": "latest",
+  "phpmyadmin": "latest",
+  "docker_compose": "3.8",
+  "author": "Mario Campos"
+}

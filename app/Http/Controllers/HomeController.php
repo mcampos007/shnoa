@@ -11,11 +11,14 @@ use App\Models\OrderItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 //use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 //use Barryvdh\DomPDF\PDF;
-use PDF;
+
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller {
@@ -58,34 +61,44 @@ class HomeController extends Controller {
 
     //Método para productos
 
-    public function products() {
-        // Obtener las categorías con sus subcategorías y los productos dentro de cada subcategoría
-        $categories = Category::with( [ 'subcategories.products.images' ] )->get();
-
-        // Retornar la vista con los datos estructurados
-        return view( 'products', compact( 'categories' ) );
+   public function products() {
+        $categories = Category::with([
+            'subcategories' => function ($query) {
+                $query->with(['products' => function ($q) {
+                    $q->where('stock', '>', 0)->with('images');
+                }]);
+            }
+        ])
+        ->get();
+        Log::info('Categorías cargadas: ' . $categories->count());
+        Log::info('Detalle de categorías: ' . $categories->toJson());
+        Log::info('Detalle de productos en categorías: ' . $categories->flatMap->subcategories->flatMap->products->toJson());
+        return view('products', compact('categories'));
+    
     }
+
 
     public function getCategoryData(int $categoryId): JsonResponse
     {
-        // Buscar la categoría
-        //    $category = Category::with('subcategories', 'products')->find($categoryId);
-        // Buscar la categoría con subcategorías y productos con la imagen destacada o la primera disponible
+        // Buscar la categoría con subcategorías y productos en stock
+        $category = Category::with([
+            'subcategories:id,name',
+            'products' => function ($query) {
+                $query->where('stock', '>', 0)
+                    ->where('price', '>', 0)
+                    ->with(['featuredOrFirstImage' => function ($q) {
+                        $q->select('id', 'product_id', 'image_path');
+                    }]);
+            }
+        ])->find($categoryId);
+        // // Buscar la categoría con subcategorías y productos con la imagen destacada o la primera disponible
         // $category = Category::with([
         //     'subcategories:id,name',
         //     'products.featuredOrFirstImage' => function ($query) {
         //         $query->select('id', 'product_id', 'image_path');
         //     }
-        //     ])->find($categoryId);
-
-        // Buscar la categoría con subcategorías y productos con la imagen destacada o la primera disponible
-        $category = Category::with([
-            'subcategories:id,name',
-            'products.featuredOrFirstImage' => function ($query) {
-                $query->select('id', 'product_id', 'image_path');
-            }
-        ])->find($categoryId);
-            // Verificar si la categoría existe
+        // ])->find($categoryId);
+        //     // Verificar si la categoría existe
             if (!$category) {
                 return response()->json([
                     'error' => 'Categoría no encontrada.',
@@ -243,6 +256,8 @@ class HomeController extends Controller {
                 'observations' => $request->input('observation'),
                 'total' => $total,
             ]);
+            
+            Log::info('Orden creada: ' . $order->id);
 
             // Crear los registros de los productos del pedido
             foreach ($cart as $item) {
@@ -252,11 +267,13 @@ class HomeController extends Controller {
                     'quantity' => $item['quantity'],
                     'price' => $item['product']->price,
                 ]);
+                Log::info('Producto agregado al pedido: ' . $item['product']->name . ' (Cantidad: ' . $item['quantity'] . ')'); 
             }
 
            // Generar el PDF con los detalles del pedido
            //$pdf = app(PDF::class);
            $pdf = PDF::loadView('cart.pedido_pdf', compact('order'));
+           Log::info('PDF generado para el pedido: ' . $order->id);
            // $pdf = $pdf->loadView('pedido_pdf', compact('order'));
             $pdfPath = 'pedidos/pedido_' . $order->id . '.pdf';
             Storage::put('public/' . $pdfPath, $pdf->output());
@@ -281,6 +298,7 @@ class HomeController extends Controller {
                         ->text("Nuevo Pedido Recibido...") // Cambiado de setBody() a text()
                         ->attach(Storage::path('public/' . $pdfPath));
             });
+            Log::info('Correo enviado para el pedido: ' . $order->id);
 
             DB::commit();
 
@@ -360,5 +378,3 @@ class HomeController extends Controller {
 
 //     return response()->json($category);
 // }
-
-
