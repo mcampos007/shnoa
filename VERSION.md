@@ -1,6 +1,6 @@
 # Proyecto Laravel Shnoa
 
-**Versión:** v1.1.3  
+**Versión:** HEAD  
 **Fecha:** 2026-03-27  
 **Estado:** Desarrollo
 
