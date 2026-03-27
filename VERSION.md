@@ -1,6 +1,6 @@
 # Proyecto Laravel Shnoa
 
-**Versión:** main  
+**Versión:** V1.1.3
 **Fecha:** 2026-03-27  
 **Estado:** Desarrollo
 
@@ -13,7 +13,7 @@
 - Docker Compose: 3.8
 
 ## Cambios recientes
-- Commit realizado en main el 2026-03-27
+- Commit realizado en back-001 el 2026-03-27
 
 ## Responsable
 - Mario (Co-founder & CEO en Infocam)
