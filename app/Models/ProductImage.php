@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductImage extends Model {
     use HasFactory, SoftDeletes;
+    
     protected $fillable = [
         'product_id',
         'image_path',

@@ -1,0 +1,49 @@
+services:
+  laravel.test:
+    build:
+      context: ./vendor/laravel/sail/runtimes/8.4
+      dockerfile: Dockerfile
+      args:
+                WWWGROUP: '${WWWGROUP}'
+    container_name: laravel-shnoa-app
+    ports:
+      - "8081:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - mysql
+      - redis
+
+  mysql:
+    image: mysql:8
+    container_name: laravel-shnoa-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel_shnoa
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql-test-data:/var/lib/mysql
+
+  redis:
+    image: redis:alpine
+    container_name: laravel-shnoa-redis
+    ports:
+      - "6380:6379"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-shnoa
+    restart: always
+    ports:
+      - "8082:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: root
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-test-data:

@@ -97,6 +97,11 @@ class Product extends Model {
         return $query->where( 'stock', $stock );
     }
 
+    public function scopeInStock($query) {
+        return $query->where('stock', '>', 0);
+    }
+
+
     public function scopeByActive( $query, $active ) {
         return $query->where( 'is_active', $active );
     }
