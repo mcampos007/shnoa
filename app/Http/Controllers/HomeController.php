@@ -228,11 +228,14 @@ class HomeController extends Controller {
 
     public function sendOrder(Request $request)
     {
+        Log::info('Iniciando proceso de envío de pedido');
+        Log::info('Datos recibidos: ', $request->all());
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'phone' => 'required|string|max:20',
-            'observation' => 'nullable|string|max:500',
+            'observations' => 'nullable|string|max:500',
         ]);
 
         $cart = session('cart', []);
@@ -253,11 +256,13 @@ class HomeController extends Controller {
                 'customer_name' => $request->input('name'),
                 'customer_email' => $request->input('email'),
                 'customer_phone' => $request->input('phone'),
-                'observations' => $request->input('observation'),
+                'observations' => $request->input('observations'),
                 'total' => $total,
+                'status_id' => 8, // Asumiendo que 8 es el estado "on hold" o similar para pedidos nuevos
             ]);
             
             Log::info('Orden creada: ' . $order->id);
+            Log::info('Detalles de la orden: ' . $order->toJson());
 
             // Crear los registros de los productos del pedido
             foreach ($cart as $item) {

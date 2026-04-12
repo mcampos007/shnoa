@@ -13,7 +13,8 @@ class Order extends Model {
         'customer_email',
         'customer_phone',
         'observations',
-        'total'
+        'total',
+        'status_id'
     ];
 
     public function items() {
